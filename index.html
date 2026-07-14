@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>BurmaHubb.com</title>
     
-    <!-- 🌟 Clean & Modern Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,500&family=Signika+Negative:wght@600;700&display=swap" rel="stylesheet">
@@ -134,6 +133,8 @@
             flex-direction: column;
             gap: 12px;
             width: 100%;
+            position: relative;
+            z-index: 100;
         }
 
         .site-logo-area {
@@ -228,10 +229,13 @@
             border-color: var(--volt-green);
         }
 
-        /* ==================== 📸 PREMIUM 16:9 SLIDER (FADE EFFECT) ==================== */
+        /* ==================== 📸 PREMIUM 16:9 SLIDER (FIXED HEIGHT POSITION) ==================== */
         .slider-section-box {
             padding: 0 8px;
             width: 100%;
+            position: relative;
+            display: block;
+            clear: both;
         }
 
         .slider-outer {
@@ -239,6 +243,8 @@
             border-radius: 8px;
             overflow: hidden;
             background-color: var(--dark-gray);
+            position: relative;
+            width: 100%;
         }
 
         .slider-frame {
@@ -246,15 +252,16 @@
             aspect-ratio: 16/9; /* Standard 16:9 Aspect Ratio */
             position: relative;
             overflow: hidden;
+            display: block;
         }
 
         .slider-inner-track {
             position: relative;
             width: 100%;
             height: 100%;
+            display: block;
         }
 
-        /* တစ်ပုံချင်းစီ ပြောင်းလဲနိုင်ရန် Fade Animation စနစ် ပြောင်းလဲပြင်ဆင်ထားပါသည် */
         .slide-frame-item {
             position: absolute;
             top: 0;
@@ -265,11 +272,13 @@
             visibility: hidden;
             transition: opacity 0.8s ease-in-out;
             display: block;
+            z-index: 1;
         }
 
         .slide-frame-item.active {
             opacity: 1;
             visibility: visible;
+            z-index: 2;
         }
 
         .slide-frame-item img {
@@ -286,6 +295,7 @@
             width: 100%;
             background: linear-gradient(transparent, rgba(0,0,0,0.9));
             padding: 12px 10px;
+            z-index: 3;
         }
 
         .slide-caption p {
@@ -294,10 +304,15 @@
             font-weight: bold;
         }
 
-        /* ==================== VIDEO GRID ==================== */
+        /* ==================== VIDEO GRID CONTAINER (SAFETY POSITIONING) ==================== */
         .video-container-grid {
             padding: 0 8px;
             width: 100%;
+            position: relative; 
+            z-index: 10; /* Block နေရာပျောက်မသွားအောင် Position မြှင့်တင်ထားသည် */
+            display: block;
+            margin-top: 4px;
+            clear: both;
         }
 
         .clean-video-grid {
@@ -305,6 +320,7 @@
             grid-template-columns: repeat(2, 1fr);
             gap: 8px;
             width: 100%;
+            min-height: 200px; /* Loader ကောင်းကောင်းမြင်ရအောင် Height သတ်မှတ်ချက်ထည့်သွင်းသည် */
         }
 
         .clean-video-card {
@@ -315,6 +331,7 @@
             display: flex;
             flex-direction: column;
             border-bottom: 2px solid transparent;
+            position: relative;
         }
 
         .clean-video-card:active {
@@ -345,6 +362,7 @@
             font-weight: bold;
             padding: 2px 4px;
             border-radius: 2px;
+            z-index: 2;
         }
 
         .meta-description-area {
@@ -352,6 +370,7 @@
             display: flex;
             flex-direction: column;
             gap: 4px;
+            background-color: var(--dark-gray);
         }
 
         .meta-title {
@@ -386,6 +405,7 @@
             flex-direction: column;
             gap: 12px;
             width: 100%;
+            position: relative;
         }
 
         .back-navigation-btn {
@@ -460,7 +480,7 @@
             display: flex;
             flex-direction: column;
             gap: 12px;
-            margin-top: 6px; /* Download button မရှိတော့သည့်အတွက် space ပိုလှအောင် ညှိပေးထားပါသည် */
+            margin-top: 6px;
         }
 
         .vip-banner-desc {
@@ -502,14 +522,13 @@
             text-align: center;
             font-weight: 500;
             font-size: 0.85rem;
-            padding: 24px 10px;
-            color: #666;
+            padding: 30px 10px;
+            color: #C6FF33; /* သေချာမြင်သာအောင် စာသားအရောင် Volt-green သုံးထားပါသည် */
         }
     </style>
 </head>
 <body>
 
-<!-- 🔔 Notice Pop-up Layer -->
 <div class="popup-overlay" id="noticePopup">
     <div class="popup-box">
         <div class="popup-title">18+ WARNING</div>
@@ -522,23 +541,19 @@
 
 <div class="phone-screen">
 
-    <!-- ==================== DASHBOARD PAGE ==================== -->
     <div id="dashboardPage" class="page active">
         
-        <!-- Clean Web Header Component -->
         <div class="site-header">
             <div class="site-logo-area">
                 <span class="logo-text-white">BURMA</span>
                 <span class="logo-text-green">HUBB</span>
             </div>
 
-            <!-- Search Field -->
             <div class="search-wrapper">
                 <input type="text" id="searchField" class="search-input-field" placeholder="Search videos...">
                 <div class="search-submit-icon" onclick="executeSearch()">🔍</div>
             </div>
 
-            <!-- Tags Nav bar -->
             <div class="tags-nav-bar">
                 <button class="tag-pill active" onclick="changeCategory('all', this)">All Videos</button>
                 <button class="tag-pill" onclick="changeCategory('asian', this)">Asian</button>
@@ -546,26 +561,22 @@
             </div>
         </div>
 
-        <!-- 📸 PHOTO SLIDER SECTION (16:9 Display) -->
         <div class="slider-section-box">
             <div class="slider-outer">
                 <div class="slider-frame">
                     <div class="slider-inner-track" id="sliderTrack">
-                        <!-- Slide 1 -->
                         <div class="slide-frame-item active">
                             <img src="https://i.ibb.co/Fk2zkyjc/New-Project-114-D3-F3928.png" alt="Slide 1">
                             <div class="slide-caption">
                                 <p>အလန်းစား မော်ဒယ်သစ်များ နေ့စဉ်တင်ပေးသည်</p>
                             </div>
                         </div>
-                        <!-- Slide 2 -->
                         <div class="slide-frame-item">
                             <img src="https://i.ibb.co/8n1JzTPc/New-Project-114-E42945-C.png" alt="Slide 2">
                             <div class="slide-caption">
                                 <p>ကြည်လင်ပြတ်သားသော HD Quality ဗီဒီယိုများ</p>
                             </div>
                         </div>
-                        <!-- Slide 3 -->
                         <div class="slide-frame-item">
                             <img src="https://i.ibb.co/tTS0zmSh/New-Project-114-DA26311.png" alt="Slide 3">
                             <div class="slide-caption">
@@ -577,48 +588,37 @@
             </div>
         </div>
 
-        <!-- Videos Content Grid -->
         <div class="video-container-grid">
             <div class="clean-video-grid" id="mainVideoGrid">
-                <!-- Loaded dynamically via javascript -->
-            </div>
+                </div>
         </div>
     </div>
 
 
-    <!-- ==================== PLAYER PAGE ==================== -->
     <div id="playerPage" class="page">
         <div class="player-inner-section">
-            <!-- Back Navigation Button -->
             <button class="back-navigation-btn" onclick="returnToDashboard()">
                 ◀ Back to Home
             </button>
 
-            <!-- Video Player Frame with Anti-Click Shield Layer -->
             <div class="player-viewport-wrapper">
                 <div class="player-anti-click-shield"></div>
                 <div class="iframe-video-wrapper" id="iframeWrapper"></div>
             </div>
 
-            <!-- Video Active Title -->
             <div class="active-video-details-title" id="activeVideoTitle">
                 Loading video title details...
             </div>
 
-            <!-- (🚨 DOWNLOAD BUTTON REMOVED SUCCESSFULLY) -->
-
-            <!-- 💎 PREMIUM VIP REDIRECT CARD -->
             <div class="clean-vip-banner">
                 <div class="vip-banner-desc">
                     မြန်မာ အလန်းဇယား // Local Leak // မော်ဒယ်ကားများ // Solo Vd // အထန်မလေးဟာများ // ပရမီယံ Videos တွေကို Vipကြေး ၂၀၀၀၀ကျပ်ဖြင့် လာရောက်ဝင်နိုင်ပါပြီ!
                 </div>
-                <!-- Telegram Direct link with Pre-filled Text -->
                 <a href="https://t.me/your_bot_username?text=Vipဝင်ချင်လို့ပါဗျ%20ငွေလွှဲရမဲ့%20နံပါတ်လေးပို့ထားပေးပါ" target="_blank" class="vip-direct-action-btn">
                     VIP JOIN NOW
                 </a>
             </div>
 
-            <!-- Related Contents Title -->
             <div class="section-header-title">Related Videos</div>
             <div class="clean-video-grid" id="relatedVideoGrid"></div>
         </div>
@@ -626,13 +626,9 @@
 
 </div>
 
-<!-- ==================== ADSTERRA ADVERTISING CODES ==================== -->
-<!-- Popunder Ad -->
 <script src="https://pl30247190.effectivecpmnetwork.com/1b/c1/8d/1bc18dbccbb0492512d665fe4728d90f.js"></script>
-<!-- Social Bar Ad -->
 <script src="https://pl30247191.effectivecpmnetwork.com/8e/e7/36/8ee736ffc13b594f8960d0a967959a01.js"></script>
 
-<!-- API Core Logic & App States -->
 <script>
     let searchKeyword = "asian"; 
     
@@ -647,7 +643,6 @@
     }
 
     document.addEventListener("DOMContentLoaded", () => {
-        // Bypass CORS using corsproxy.io
         loadPortalVideos(searchKeyword, dashboardPageNum, 'mainVideoGrid', false);
         initPhotoAutoSlider(); 
 
@@ -676,7 +671,7 @@
         });
     });
 
-    // 📸 တစ်ပုံချင်းစီ သေသပ်စွာ ပြောင်းလဲပေးသည့် Slider Logic (Fade-In/Fade-Out System)
+    // 📸 Slider Logic (Fade-In/Fade-Out System)
     function initPhotoAutoSlider() {
         const slides = document.querySelectorAll('.slide-frame-item');
         let currentSlideIndex = 0;
@@ -685,15 +680,10 @@
         if (totalSlides === 0) return;
 
         setInterval(() => {
-            // လက်ရှိပြနေတဲ့ slide ကို ဖျောက်
             slides[currentSlideIndex].classList.remove('active');
-            
-            // နောက်တစ်ပုံ Index ကို တွက်ချက်
             currentSlideIndex = (currentSlideIndex + 1) % totalSlides;
-            
-            // နောက်ပုံကို ပြသပေး
             slides[currentSlideIndex].classList.add('active');
-        }, 4000); // ၄ စက္ကန့်တစ်ခါ ပြောင်းပါမည်
+        }, 4000); 
     }
 
     function closeNoticePopup() {
@@ -715,10 +705,10 @@
         }
 
         try {
-            // Actual API Call
+            // Real API Request Endpoint
             const realApiUrl = `https://www.eporner.com/api/v2/video/search/?query=${encodeURIComponent(query)}&per_page=20&page=${pageNum}&thumbsize=big`;
             
-            // Bypass CORS issues using corsproxy.io
+            // Bypass Browser CORS security lock via corsproxy.io proxy
             const endpoint = `https://corsproxy.io/?` + encodeURIComponent(realApiUrl);
             
             const res = await fetch(endpoint);
@@ -747,7 +737,6 @@
                         const card = document.createElement('div');
                         card.className = 'clean-video-card';
                         
-                        // Pass video parameters to Player opener (without download mapping parameter)
                         card.onclick = () => openVideoPlayer(video.embed, video.title);
 
                         card.innerHTML = `
@@ -816,7 +805,6 @@
         loadPortalVideos(searchKeyword, dashboardPageNum, 'mainVideoGrid', false);
     }
 
-    // Video Player opener (Removed downloader linkage details)
     function openVideoPlayer(embedUrl, title) {
         currentActiveView = "player";
         document.getElementById('dashboardPage').classList.remove('active');
