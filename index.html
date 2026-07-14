@@ -242,7 +242,7 @@
 
         .slider-frame {
             width: 100%;
-            aspect-ratio: 16/9; /* 16:9 အချိုးအစားအပြည့် */
+            aspect-ratio: 16/9; /* 16:9 Ratio */
             position: relative;
             overflow: hidden;
         }
@@ -275,7 +275,7 @@
         .slide-frame-item img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* ပုံတွေ ဖုန်းမျက်နှာပြင်မှာ ကွက်တိဖြစ်စေရန် */
+            object-fit: cover;
             display: block;
         }
 
@@ -449,34 +449,6 @@
             padding-left: 8px;
         }
 
-        /* ==================== ❤️ BOOKMARK ACTION BUTTON ==================== */
-        .player-controls-row {
-            display: flex;
-            width: 100%;
-        }
-
-        .save-btn {
-            background-color: #1a1a1a;
-            color: #ff4444;
-            border: 2px solid #ff4444;
-            border-radius: 6px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            cursor: pointer;
-            transition: all 0.2s;
-            width: 100%;
-            padding: 14px;
-        }
-
-        .save-btn.saved {
-            background-color: #ff4444;
-            color: var(--pure-black);
-        }
-
         /* ==================== PREMIUM VIP BOX ==================== */
         .clean-vip-banner {
             background-color: var(--dark-gray);
@@ -487,6 +459,7 @@
             display: flex;
             flex-direction: column;
             gap: 12px;
+            margin-top: 6px;
         }
 
         .vip-banner-desc {
@@ -559,7 +532,6 @@
                 <button class="tag-pill active" onclick="changeCategory('all', this)">All Videos</button>
                 <button class="tag-pill" onclick="changeCategory('asian', this)">Asian</button>
                 <button class="tag-pill" onclick="changeCategory('myanmar', this)">Myanmar</button>
-                <button class="tag-pill" style="color: #ff4444;" onclick="changeCategory('saved', this)">❤️ Saved Videos</button>
             </div>
         </div>
 
@@ -605,12 +577,6 @@
                 Loading video details...
             </div>
 
-            <div class="player-controls-row">
-                <button id="saveVideoBtn" class="save-btn" onclick="toggleSaveCurrentVideo()">
-                    ❤️ WATCH LATER (SAVE TO MY PLAYLIST)
-                </button>
-            </div>
-
             <div class="clean-vip-banner">
                 <div class="vip-banner-desc">
                     မြန်မာ အလန်းဇယား // Local Leak // မော်ဒယ်ကားများ // Solo Vd // ပရမီယံ Videos တွေကို Vipကြေး ၂၀၀၀၀ကျပ်ဖြင့် ဝင်နိုင်ပါပြီ!
@@ -636,13 +602,8 @@
     let playerRelatedPageNum = Math.floor(Math.random() * 5) + 6;
     let isFetchingMore = false;
     let currentActiveView = "dashboard"; 
-    
-    // Active Playing Video Object Holder
-    let currentPlayingVideoData = null;
 
-    // Initialize HTML5 LocalStorage Safe Databases
     if (!sessionStorage.getItem('seenVideoIds')) sessionStorage.setItem('seenVideoIds', JSON.stringify([]));
-    if (!localStorage.getItem('savedWebPortalVideos')) localStorage.setItem('savedWebPortalVideos', JSON.stringify([]));
 
     document.addEventListener("DOMContentLoaded", () => {
         loadPortalVideos(searchKeyword, dashboardPageNum, 'mainVideoGrid', false);
@@ -657,7 +618,6 @@
 
         // Infinite Scroll Engine
         window.addEventListener('scroll', () => {
-            if (searchKeyword === "saved_playlist_view") return; // Disable infinite scroll on Saved tab
             if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 500) {
                 if (!isFetchingMore) {
                     isFetchingMore = true;
@@ -682,56 +642,20 @@
         if (totalSlides === 0) return;
 
         setInterval(() => {
-            // Remove active status from current slide
             slides[currentSlideIndex].classList.remove('active');
-            
-            // Advance to next index
             currentSlideIndex = (currentSlideIndex + 1) % totalSlides;
-            
-            // Activate next slide
             slides[currentSlideIndex].classList.add('active');
-        }, 4000); // ၄ စက္ကန့်လျှင် တစ်ပုံစီ တစ်ဆင့်ချင်း သွားမည်
+        }, 4000); // ၄ စက္ကန့်လျှင် တစ်ပုံစီ အလှည့်ကျ Slide သွားပါမည်
     }
 
     function closeNoticePopup() {
         document.getElementById('noticePopup').style.display = 'none';
     }
 
-    // Dynamic Engine handling API and Local Storage Saved Database
+    // API Videos Request Engine
     async function loadPortalVideos(query, pageNum, containerId, appendMode = false) {
         const targetGrid = document.getElementById(containerId);
         
-        // Handle Bookmark Custom Tab Mode
-        if (query === "saved_playlist_view") {
-            const savedList = JSON.parse(localStorage.getItem('savedWebPortalVideos'));
-            targetGrid.innerHTML = "";
-            if (!savedList || savedList.length === 0) {
-                targetGrid.innerHTML = `<div class="system-msg">❤️ သိမ်းဆည်းထားသော ဗီဒီယိုများ မရှိသေးပါဗျာ။</div>`;
-                return;
-            }
-            savedList.forEach(video => {
-                const card = document.createElement('div');
-                card.className = 'clean-video-card';
-                card.onclick = () => openVideoPlayer(video.embed, video.title, video.url, video.thumb, video.duration, video.added);
-                card.innerHTML = `
-                    <div class="thumb-wrapper">
-                        <img src="${video.thumb}" alt="Thumb">
-                        <div class="video-duration-badge">${video.duration}</div>
-                    </div>
-                    <div class="meta-description-area">
-                        <div class="meta-title">${video.title}</div>
-                        <div class="meta-stats">
-                            <span class="stat-views">Saved Video</span>
-                            <span>${video.added}</span>
-                        </div>
-                    </div>
-                `;
-                targetGrid.appendChild(card);
-            });
-            return;
-        }
-
-        // Standard API Request Engine Mode
         if (!appendMode) {
             targetGrid.innerHTML = `<div class="system-msg" id="gridLoader">Loading videos...</div>`;
         } else {
@@ -743,7 +667,6 @@
         }
 
         try {
-            // Video Fetch logic with proper parameters & HTTPS request
             const endpoint = `https://www.eporner.com/api/v2/video/search/?query=${encodeURIComponent(query)}&per_page=20&page=${pageNum}&thumbsize=big`;
             const res = await fetch(endpoint);
             const resultData = await res.json();
@@ -800,7 +723,6 @@
     function executeSearch() {
         const value = document.getElementById('searchField').value.trim();
         searchKeyword = value ? value : "asian"; 
-        document.getElementById('sliderSection').style.display = "block";
         dashboardPageNum = 1;
         loadPortalVideos(searchKeyword, dashboardPageNum, 'mainVideoGrid', false);
     }
@@ -809,16 +731,9 @@
         document.querySelectorAll('.tag-pill').forEach(btn => btn.classList.remove('active'));
         element.classList.add('active');
 
-        if (type === 'saved') {
-            searchKeyword = "saved_playlist_view";
-            document.getElementById('sliderSection').style.display = "none"; 
-            loadPortalVideos(searchKeyword, 1, 'mainVideoGrid', false);
-        } else {
-            document.getElementById('sliderSection').style.display = "block";
-            searchKeyword = (type === 'all') ? 'asian' : type;
-            dashboardPageNum = 1;
-            loadPortalVideos(searchKeyword, dashboardPageNum, 'mainVideoGrid', false);
-        }
+        searchKeyword = (type === 'all') ? 'asian' : type;
+        dashboardPageNum = 1;
+        loadPortalVideos(searchKeyword, dashboardPageNum, 'mainVideoGrid', false);
     }
 
     function openVideoPlayer(embedUrl, title, originalUrl, thumbUrl, duration, addedTime) {
@@ -829,50 +744,9 @@
         document.getElementById('iframeWrapper').innerHTML = `<iframe src="${embedUrl}" allowfullscreen scrolling="no"></iframe>`;
         document.getElementById('activeVideoTitle').innerText = title;
 
-        // Map Active Data into Object for Bookmark function
-        currentPlayingVideoData = {
-            embed: embedUrl,
-            title: title,
-            url: originalUrl,
-            thumb: thumbUrl,
-            duration: duration,
-            added: addedTime
-        };
-
-        // Render Heart Icon Active State Check
-        const savedList = JSON.parse(localStorage.getItem('savedWebPortalVideos'));
-        const isAlreadySaved = savedList.some(v => v.url === originalUrl);
-        const saveBtn = document.getElementById('saveVideoBtn');
-        if (isAlreadySaved) {
-            saveBtn.classList.add('saved');
-            saveBtn.innerText = "❤️ SAVED IN PLAYLIST (CLICK TO REMOVE)";
-        } else {
-            saveBtn.classList.remove('saved');
-            saveBtn.innerText = "❤️ WATCH LATER (SAVE TO MY PLAYLIST)";
-        }
-
         playerRelatedPageNum = Math.floor(Math.random() * 5) + 6;
-        loadPortalVideos(searchKeyword === "saved_playlist_view" ? "asian" : searchKeyword, playerRelatedPageNum, 'relatedVideoGrid', false);
+        loadPortalVideos(searchKeyword, playerRelatedPageNum, 'relatedVideoGrid', false);
         window.scrollTo(0, 0);
-    }
-
-    // ❤️ Save Core Controller Logic
-    function toggleSaveCurrentVideo() {
-        if (!currentPlayingVideoData) return;
-        let savedList = JSON.parse(localStorage.getItem('savedWebPortalVideos'));
-        const index = savedList.findIndex(v => v.url === currentPlayingVideoData.url);
-        const saveBtn = document.getElementById('saveVideoBtn');
-
-        if (index > -1) {
-            savedList.splice(index, 1); 
-            saveBtn.classList.remove('saved');
-            saveBtn.innerText = "❤️ WATCH LATER (SAVE TO MY PLAYLIST)";
-        } else {
-            savedList.push(currentPlayingVideoData); 
-            saveBtn.classList.add('saved');
-            saveBtn.innerText = "❤️ SAVED IN PLAYLIST (CLICK TO REMOVE)";
-        }
-        localStorage.setItem('savedWebPortalVideos', JSON.stringify(savedList));
     }
 
     function returnToDashboard() {
@@ -882,12 +756,8 @@
         document.getElementById('iframeWrapper').innerHTML = ""; 
         document.getElementById('relatedVideoGrid').innerHTML = ""; 
 
-        if (searchKeyword === "saved_playlist_view") {
-            loadPortalVideos(searchKeyword, 1, 'mainVideoGrid', false);
-        } else {
-            dashboardPageNum = dashboardPageNum + 1;
-            loadPortalVideos(searchKeyword, dashboardPageNum, 'mainVideoGrid', false);
-        }
+        dashboardPageNum = dashboardPageNum + 1;
+        loadPortalVideos(searchKeyword, dashboardPageNum, 'mainVideoGrid', false);
     }
 </script>
 
