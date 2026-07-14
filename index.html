@@ -229,7 +229,7 @@
             border-color: var(--volt-green);
         }
 
-        /* ==================== 📸 PREMIUM 16:9 SLIDER (FIXED HEIGHT POSITION) ==================== */
+        /* ==================== 📸 PREMIUM 16:9 SLIDER (SMOOTH FADE EFFECT) ==================== */
         .slider-section-box {
             padding: 0 8px;
             width: 100%;
@@ -249,7 +249,7 @@
 
         .slider-frame {
             width: 100%;
-            aspect-ratio: 16/9; /* Standard 16:9 Aspect Ratio */
+            aspect-ratio: 16/9; /* Exact 16:9 Banner Aspect Ratio */
             position: relative;
             overflow: hidden;
             display: block;
@@ -304,14 +304,14 @@
             font-weight: bold;
         }
 
-        /* ==================== VIDEO GRID CONTAINER (SAFETY POSITIONING) ==================== */
+        /* ==================== VIDEO GRID CONTAINER (SAFE OVERLAP PREVENTER) ==================== */
         .video-container-grid {
             padding: 0 8px;
             width: 100%;
             position: relative; 
-            z-index: 10; /* Block နေရာပျောက်မသွားအောင် Position မြှင့်တင်ထားသည် */
+            z-index: 10; 
             display: block;
-            margin-top: 4px;
+            margin-top: 6px;
             clear: both;
         }
 
@@ -320,7 +320,7 @@
             grid-template-columns: repeat(2, 1fr);
             gap: 8px;
             width: 100%;
-            min-height: 200px; /* Loader ကောင်းကောင်းမြင်ရအောင် Height သတ်မှတ်ချက်ထည့်သွင်းသည် */
+            min-height: 250px;
         }
 
         .clean-video-card {
@@ -521,9 +521,9 @@
             grid-column: span 2;
             text-align: center;
             font-weight: 500;
-            font-size: 0.85rem;
-            padding: 30px 10px;
-            color: #C6FF33; /* သေချာမြင်သာအောင် စာသားအရောင် Volt-green သုံးထားပါသည် */
+            font-size: 0.9rem;
+            padding: 40px 10px;
+            color: var(--volt-green);
         }
     </style>
 </head>
@@ -690,7 +690,7 @@
         document.getElementById('noticePopup').style.display = 'none';
     }
 
-    // CORS Proxy-enabled API Video Loader
+    // 🛡️ AllOrigins High-Performance Production Proxy System
     async function loadPortalVideos(query, pageNum, containerId, appendMode = false) {
         const targetGrid = document.getElementById(containerId);
         
@@ -705,14 +705,16 @@
         }
 
         try {
-            // Real API Request Endpoint
             const realApiUrl = `https://www.eporner.com/api/v2/video/search/?query=${encodeURIComponent(query)}&per_page=20&page=${pageNum}&thumbsize=big`;
             
-            // Bypass Browser CORS security lock via corsproxy.io proxy
-            const endpoint = `https://corsproxy.io/?` + encodeURIComponent(realApiUrl);
+            // 🚀 Production Domain တွေမှာပါ 100% အလုပ်လုပ်မယ့် Global Proxy စနစ်ပြောင်းလိုက်ပါတယ်
+            const endpoint = `https://api.allorigins.win/get?url=${encodeURIComponent(realApiUrl)}`;
             
             const res = await fetch(endpoint);
-            const resultData = await res.json();
+            const rawData = await res.json();
+            
+            // allorigins က string အနေနဲ့ပြန်ပေးလို့ JSON object ဖြစ်အောင် parse ပြန်လုပ်ပေးပါတယ်
+            const resultData = JSON.parse(rawData.contents);
 
             if (!appendMode) {
                 targetGrid.innerHTML = ""; 
