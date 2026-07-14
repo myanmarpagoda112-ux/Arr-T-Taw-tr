@@ -227,7 +227,7 @@
             border-color: var(--volt-green);
         }
 
-        /* ==================== 📸 16:9 BANNER AUTO SLIDER ==================== */
+        /* ==================== 📸 COHESIVE 16:9 BANNER AUTO SLIDER ==================== */
         .slider-section-box {
             padding: 0 8px;
             width: 100%;
@@ -242,7 +242,7 @@
 
         .slider-frame {
             width: 100%;
-            aspect-ratio: 16/9; 
+            aspect-ratio: 16/9; /* ပြင်ဆင်ပြီးသား 16:9 Ratio */
             position: relative;
             overflow: hidden;
         }
@@ -261,7 +261,7 @@
             height: 100%;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.8s ease-in-out; 
+            transition: opacity 0.8s ease-in-out; /* ညင်သာစွာ ပြောင်းလဲပေးမည့် Effect */
             z-index: 1;
         }
 
@@ -386,7 +386,7 @@
             font-weight: bold;
         }
 
-        /* ==================== PLAYER VIEWPORT SYSTEM (ADVANCED ANTI-LEAK) ==================== */
+        /* ==================== PLAYER VIEWPORT SYSTEM (ANTI LEAK) ==================== */
         .player-inner-section {
             padding: 12px 8px;
             display: flex;
@@ -437,49 +437,16 @@
             display: block;
         }
 
-        /* 🛡️ Full-Screen Active Smart Shield */
+        /* 🛡️ Anti-Click Shield Layer - မူရင်း API Site စာသားလင့်ခ်များအား ကာကွယ်ရန်အလွှာ */
         .player-anti-click-shield {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.45); /* Player ကို အနည်းငယ်မှောင်ပြီး Custom Button အား ပေါ်လွင်စေခြင်း */
+            height: 45px; /* ဗီဒီယိုအပေါ်ပိုင်း Header ဧရိယာအားလုံးကို ဖုံးအုပ်ထားမည် */
+            background: transparent;
             z-index: 10;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-        }
-
-        /* 🟢 Custom Volt-Green Play Button */
-        .custom-play-btn {
-            width: 65px;
-            height: 65px;
-            background-color: var(--volt-green);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 0 20px rgba(198, 255, 51, 0.6);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .custom-play-btn:active {
-            transform: scale(0.9);
-            box-shadow: 0 0 30px rgba(198, 255, 51, 0.9);
-        }
-
-        /* Play Triangle CSS Shape */
-        .custom-play-btn::after {
-            content: '';
-            display: block;
-            width: 0;
-            height: 0;
-            border-style: solid;
-            border-width: 12px 0 12px 20px;
-            border-color: transparent transparent transparent var(--pure-black);
-            margin-left: 5px; /* Alignment adjustment */
+            cursor: default;
         }
 
         .active-video-details-title {
@@ -632,10 +599,7 @@
             </button>
 
             <div class="player-viewport-wrapper">
-                
-                <div class="player-anti-click-shield" id="playerShield" onclick="deactivateShield()">
-                    <div class="custom-play-btn"></div>
-                </div>
+                <div class="player-anti-click-shield"></div>
                 
                 <div class="iframe-video-wrapper" id="iframeWrapper">
                     </div>
@@ -700,7 +664,7 @@
         });
     });
 
-    // 📸 Cohesive Auto Slider Engine
+    // 📸 Cohesive Auto Slider Engine (Fade transition logic)
     function initPhotoAutoSlider() {
         const slides = document.querySelectorAll('.slide-frame-item');
         let currentSlideIndex = 0;
@@ -717,27 +681,6 @@
 
     function closeNoticePopup() {
         document.getElementById('noticePopup').style.display = 'none';
-    }
-
-    // 🛡️ Smart Shield Deactivation & Autoplay Logic
-    function deactivateShield() {
-        const shield = document.getElementById('playerShield');
-        const iframe = document.querySelector('#iframeWrapper iframe');
-        
-        if (shield && iframe) {
-            let currentSrc = iframe.src;
-            
-            // 🎬 iframe link မှာ autoplay query မပါသေးရင် ထည့်သွင်းပြီး Auto Play စေခြင်း
-            if (!currentSrc.includes('autoplay=1')) {
-                if (currentSrc.includes('?')) {
-                    iframe.src = currentSrc + '&autoplay=1';
-                } else {
-                    iframe.src = currentSrc + '?autoplay=1';
-                }
-            }
-            
-            shield.style.display = 'none'; // Shield အုပ်ထားတာကို လုံးဝဖျောက်ပေးလိုက်ခြင်း
-        }
     }
 
     // Unified Fetch Implementation
@@ -850,10 +793,6 @@
         currentActiveView = "player";
         document.getElementById('dashboardPage').classList.remove('active');
         document.getElementById('playerPage').classList.add('active');
-
-        // Player အသစ်တစ်ခု ဖွင့်တိုင်း Shield အပြည့်ပြန်အုပ်ပေးထားမည်
-        const shield = document.getElementById('playerShield');
-        if (shield) shield.style.display = 'flex';
 
         document.getElementById('iframeWrapper').innerHTML = `
             <iframe src="${embedUrl}" allowfullscreen scrolling="no"></iframe>
