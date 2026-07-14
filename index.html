@@ -227,7 +227,7 @@
             border-color: var(--volt-green);
         }
 
-        /* ==================== 📸 CLICKABLE SLIDER BANNERS ==================== */
+        /* ==================== 📸 PREMIUM 16:9 BANNER SLIDER ==================== */
         .slider-section-box {
             padding: 0 8px;
             width: 100%;
@@ -242,31 +242,40 @@
 
         .slider-frame {
             width: 100%;
-            aspect-ratio: 16/8;
+            aspect-ratio: 16/9; /* 16:9 အချိုးအစားအပြည့် */
             position: relative;
             overflow: hidden;
         }
 
         .slider-inner-track {
             display: flex;
-            width: 300%;
+            width: 100%;
             height: 100%;
-            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            position: relative;
         }
 
         .slide-frame-item {
-            width: 100.333%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
             height: 100%;
-            position: relative;
-            flex-shrink: 0;
-            display: block;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.8s ease-in-out;
             text-decoration: none;
+            display: block;
+        }
+
+        .slide-frame-item.active {
+            opacity: 1;
+            visibility: visible;
         }
 
         .slide-frame-item img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: cover; /* ပုံတွေ ဖုန်းမျက်နှာပြင်မှာ ကွက်တိဖြစ်စေရန် */
             display: block;
         }
 
@@ -275,13 +284,13 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            background: linear-gradient(transparent, rgba(0,0,0,0.9));
-            padding: 10px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.95));
+            padding: 14px 10px;
         }
 
         .slide-caption p {
             color: var(--volt-green);
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             font-weight: bold;
         }
 
@@ -440,48 +449,27 @@
             padding-left: 8px;
         }
 
-        /* ==================== 🛠️ ACTION BUTTONS (DOWNLOAD & SAVE) ==================== */
+        /* ==================== ❤️ BOOKMARK ACTION BUTTON ==================== */
         .player-controls-row {
-            display: grid;
-            grid-template-columns: 3fr 1fr;
-            gap: 8px;
+            display: flex;
             width: 100%;
         }
 
-        .download-btn {
-            background-color: #1a1a1a;
-            color: var(--volt-green);
-            border: 2px solid var(--volt-green);
-            border-radius: 6px;
-            padding: 14px;
-            font-size: 0.95rem;
-            font-weight: bold;
-            text-align: center;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            cursor: pointer;
-        }
-
-        .download-btn:active {
-            background-color: var(--volt-green);
-            color: var(--pure-black);
-        }
-
-        /* ❤️ Bookmark Button CSS */
         .save-btn {
             background-color: #1a1a1a;
             color: #ff4444;
             border: 2px solid #ff4444;
             border-radius: 6px;
-            font-size: 1.3rem;
+            font-size: 1.1rem;
+            font-weight: bold;
             display: flex;
             align-items: center;
             justify-content: center;
+            gap: 8px;
             cursor: pointer;
             transition: all 0.2s;
+            width: 100%;
+            padding: 14px;
         }
 
         .save-btn.saved {
@@ -579,7 +567,7 @@
             <div class="slider-outer">
                 <div class="slider-frame">
                     <div class="slider-inner-track" id="sliderTrack">
-                        <a href="https://t.me/your_telegram_channel_link" target="_blank" class="slide-frame-item">
+                        <a href="https://t.me/your_telegram_channel_link" target="_blank" class="slide-frame-item active">
                             <img src="https://i.ibb.co/Fk2zkyjc/New-Project-114-D3-F3928.png" alt="Slide 1">
                             <div class="slide-caption"><p>VIP Group ဝင်ရန် နှိပ်ပါ</p></div>
                         </a>
@@ -618,11 +606,8 @@
             </div>
 
             <div class="player-controls-row">
-                <a href="#" id="downloadLinkBtn" target="_blank" class="download-btn">
-                    📥 DOWNLOAD VIDEO
-                </a>
                 <button id="saveVideoBtn" class="save-btn" onclick="toggleSaveCurrentVideo()">
-                    ❤️
+                    ❤️ WATCH LATER (SAVE TO MY PLAYLIST)
                 </button>
             </div>
 
@@ -688,13 +673,24 @@
         });
     });
 
+    // Premium 1-by-1 Auto Slider Engine
     function initPhotoAutoSlider() {
-        const track = document.getElementById('sliderTrack');
-        let index = 0;
+        const slides = document.querySelectorAll('.slide-frame-item');
+        let currentSlideIndex = 0;
+        const totalSlides = slides.length;
+
+        if (totalSlides === 0) return;
+
         setInterval(() => {
-            index = (index + 1) % 3;
-            track.style.transform = `translateX(-${index * 33.333}%)`;
-        }, 3500); 
+            // Remove active status from current slide
+            slides[currentSlideIndex].classList.remove('active');
+            
+            // Advance to next index
+            currentSlideIndex = (currentSlideIndex + 1) % totalSlides;
+            
+            // Activate next slide
+            slides[currentSlideIndex].classList.add('active');
+        }, 4000); // ၄ စက္ကန့်လျှင် တစ်ပုံစီ တစ်ဆင့်ချင်း သွားမည်
     }
 
     function closeNoticePopup() {
@@ -705,7 +701,7 @@
     async function loadPortalVideos(query, pageNum, containerId, appendMode = false) {
         const targetGrid = document.getElementById(containerId);
         
-        // Handle Bookmark Custom Offline Tab Mode
+        // Handle Bookmark Custom Tab Mode
         if (query === "saved_playlist_view") {
             const savedList = JSON.parse(localStorage.getItem('savedWebPortalVideos'));
             targetGrid.innerHTML = "";
@@ -747,6 +743,7 @@
         }
 
         try {
+            // Video Fetch logic with proper parameters & HTTPS request
             const endpoint = `https://www.eporner.com/api/v2/video/search/?query=${encodeURIComponent(query)}&per_page=20&page=${pageNum}&thumbsize=big`;
             const res = await fetch(endpoint);
             const resultData = await res.json();
@@ -795,7 +792,7 @@
             }
         } catch (err) {
             console.error(err);
-            if (!appendMode) targetGrid.innerHTML = `<div class="system-msg">Network error.</div>`;
+            if (!appendMode) targetGrid.innerHTML = `<div class="system-msg">Network error. Connection active but failed.</div>`;
             isFetchingMore = false;
         }
     }
@@ -814,7 +811,7 @@
 
         if (type === 'saved') {
             searchKeyword = "saved_playlist_view";
-            document.getElementById('sliderSection').style.display = "none"; // Hide slider to save space
+            document.getElementById('sliderSection').style.display = "none"; 
             loadPortalVideos(searchKeyword, 1, 'mainVideoGrid', false);
         } else {
             document.getElementById('sliderSection').style.display = "block";
@@ -832,10 +829,7 @@
         document.getElementById('iframeWrapper').innerHTML = `<iframe src="${embedUrl}" allowfullscreen scrolling="no"></iframe>`;
         document.getElementById('activeVideoTitle').innerText = title;
 
-        // Downloader Proxy Setup
-        document.getElementById('downloadLinkBtn').href = `https://9xbuddy.org/process?url=${encodeURIComponent(originalUrl)}`;
-
-        // Map Active Data into Object for Save Core Functionality
+        // Map Active Data into Object for Bookmark function
         currentPlayingVideoData = {
             embed: embedUrl,
             title: title,
@@ -845,19 +839,24 @@
             added: addedTime
         };
 
-        // Render Heart Icon Active State State Check
+        // Render Heart Icon Active State Check
         const savedList = JSON.parse(localStorage.getItem('savedWebPortalVideos'));
         const isAlreadySaved = savedList.some(v => v.url === originalUrl);
         const saveBtn = document.getElementById('saveVideoBtn');
-        if (isAlreadySaved) saveBtn.classList.add('saved');
-        else saveBtn.classList.remove('saved');
+        if (isAlreadySaved) {
+            saveBtn.classList.add('saved');
+            saveBtn.innerText = "❤️ SAVED IN PLAYLIST (CLICK TO REMOVE)";
+        } else {
+            saveBtn.classList.remove('saved');
+            saveBtn.innerText = "❤️ WATCH LATER (SAVE TO MY PLAYLIST)";
+        }
 
         playerRelatedPageNum = Math.floor(Math.random() * 5) + 6;
         loadPortalVideos(searchKeyword === "saved_playlist_view" ? "asian" : searchKeyword, playerRelatedPageNum, 'relatedVideoGrid', false);
         window.scrollTo(0, 0);
     }
 
-    // ❤️ Bookmark Add/Remove Controller Logic
+    // ❤️ Save Core Controller Logic
     function toggleSaveCurrentVideo() {
         if (!currentPlayingVideoData) return;
         let savedList = JSON.parse(localStorage.getItem('savedWebPortalVideos'));
@@ -865,11 +864,13 @@
         const saveBtn = document.getElementById('saveVideoBtn');
 
         if (index > -1) {
-            savedList.splice(index, 1); // Remove if exist
+            savedList.splice(index, 1); 
             saveBtn.classList.remove('saved');
+            saveBtn.innerText = "❤️ WATCH LATER (SAVE TO MY PLAYLIST)";
         } else {
-            savedList.push(currentPlayingVideoData); // Save new item
+            savedList.push(currentPlayingVideoData); 
             saveBtn.classList.add('saved');
+            saveBtn.innerText = "❤️ SAVED IN PLAYLIST (CLICK TO REMOVE)";
         }
         localStorage.setItem('savedWebPortalVideos', JSON.stringify(savedList));
     }
