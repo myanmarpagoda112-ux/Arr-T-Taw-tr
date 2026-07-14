@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>LOCALLEAK-HD</title>
+    
+    <!-- 🌟 Clean & Modern Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,500&family=Signika+Negative:wght@600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --pure-black: #000000;      /* အစ်ကိုရွေးထားတဲ့ Black */
+            --volt-green: #C6FF33;      /* အစ်ကိုရွေးထားတဲ့ Volt Green */
+            --dark-gray: #121212;       /* ကတ်တွေနဲ့ နောက်ခံခွဲခြားရန် Dark Gray */
+            --light-gray: #e0e0e0;
+            --white: #ffffff;
+            --font-main: 'Roboto', sans-serif;
+            --font-logo: 'Signika Negative', sans-serif;
+        }
+
+        /* 📱 Mobile Baseline Reset */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-main);
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            width: 100%;
+            overflow-x: hidden; 
+            background-color: var(--pure-black);
+            color: var(--white);
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        /* 📱 Phone Container Boundary */
+        .phone-screen {
+            width: 100%;
+            max-width: 430px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            position: relative;
+            overflow-x: hidden;
+            background-color: var(--pure-black);
+        }
+
+        .page { 
+            display: none; 
+            width: 100%;
+        }
+        .page.active { 
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* ==================== NOTICE POP-UP UI ==================== */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.93);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            padding: 20px;
+        }
+
+        .popup-box {
+            width: 100%;
+            max-width: 360px;
+            background: var(--dark-gray);
+            border: 2px solid var(--volt-green);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            animation: popIn 0.2s ease-out;
+            box-shadow: 0 0 20px rgba(198, 255, 51, 0.2);
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .popup-title {
+            font-family: var(--font-logo);
+            font-size: 1.8rem;
+            color: var(--volt-green);
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+        }
+
+        .popup-text {
+            font-size: 0.9rem;
+            color: var(--white);
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .popup-btn {
+            background: var(--volt-green);
+            color: var(--pure-black);
+            border: none;
+            border-radius: 6px;
+            padding: 12px 32px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: opacity 0.2s;
+        }
+
+        .popup-btn:active {
+            opacity: 0.9;
+        }
+
+        /* ==================== XNXX-STYLE HEADER & NAVIGATION ==================== */
+        .site-header {
+            background-color: var(--dark-gray);
+            border-bottom: 2px solid var(--volt-green);
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+        }
+
+        /* Clean Dynamic Glow Title */
+        .site-logo-area {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .logo-text-white {
+            font-family: var(--font-logo);
+            font-size: 2.1rem;
+            font-weight: bold;
+            color: var(--white);
+            letter-spacing: -0.5px;
+        }
+
+        .logo-text-green {
+            font-family: var(--font-logo);
+            font-size: 2.1rem;
+            font-weight: bold;
+            color: var(--pure-black);
+            background-color: var(--volt-green);
+            padding: 0px 8px;
+            border-radius: 4px;
+            letter-spacing: -0.5px;
+            animation: pulseGlow 2s infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 5px rgba(198, 255, 51, 0.4); }
+            100% { box-shadow: 0 0 15px rgba(198, 255, 51, 0.8); }
+        }
+
+        /* Clean Search Bar input */
+        .search-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .search-input-field {
+            width: 100%;
+            padding: 12px 50px 12px 14px;
+            border: 1px solid #333333;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            outline: none;
+            background: var(--pure-black);
+            color: var(--white);
+            transition: border-color 0.2s;
+        }
+
+        .search-input-field:focus {
+            border-color: var(--volt-green);
+        }
+
+        .search-submit-icon {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: var(--volt-green);
+        }
+
+        /* XNXX-Style Category Tags Row */
+        .tags-nav-bar {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding-bottom: 2px;
+        }
+
+        /* Hide scrollbar but keep functionality */
+        .tags-nav-bar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tag-pill {
+            background-color: #222222;
+            color: var(--white);
+            border: 1px solid #333;
+            border-radius: 4px;
+            padding: 6px 14px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .tag-pill.active {
+            background-color: var(--volt-green);
+            color: var(--pure-black);
+            border-color: var(--volt-green);
+        }
+
+        /* ==================== 📸 PREMIUM SLIDER (Clean Frame) ==================== */
+        .slider-section-box {
+            padding: 0 8px;
+            width: 100%;
+        }
+
+        .slider-outer {
+            border: 1.5px solid var(--volt-green);
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: var(--dark-gray);
+        }
+
+        .slider-frame {
+            width: 100%;
+            aspect-ratio: 16/8;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slider-inner-track {
+            display: flex;
+            width: 300%;
+            height: 100%;
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .slide-frame-item {
+            width: 100.333%;
+            height: 100%;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .slide-frame-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .slide-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(transparent, rgba(0,0,0,0.9));
+            padding: 10px;
+            text-align: left;
+        }
+
+        .slide-caption p {
+            color: var(--volt-green);
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        /* ==================== XNXX-STYLE VIDEO GRID ==================== */
+        .video-container-grid {
+            padding: 0 8px;
+            width: 100%;
+        }
+
+        .clean-video-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            width: 100%;
+        }
+
+        .clean-video-card {
+            background-color: var(--dark-gray);
+            border-radius: 6px;
+            overflow: hidden;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.2s;
+        }
+
+        .clean-video-card:active {
+            border-bottom-color: var(--volt-green);
+        }
+
+        .thumb-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/10;
+            background-color: #050505;
+        }
+
+        .thumb-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .video-duration-badge {
+            position: absolute;
+            bottom: 4px;
+            right: 4px;
+            background-color: rgba(0,0,0,0.85);
+            color: var(--volt-green);
+            font-size: 0.65rem;
+            font-weight: bold;
+            padding: 2px 4px;
+            border-radius: 2px;
+        }
+
+        .meta-description-area {
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .meta-title {
+            font-size: 0.78rem;
+            color: var(--white);
+            font-weight: 500;
+            line-height: 1.3;
+            height: 2.6em; /* Limit to 2 lines */
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .meta-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.65rem;
+            color: #888888;
+        }
+
+        .stat-views {
+            color: var(--volt-green);
+            font-weight: bold;
+        }
+
+        /* ==================== PLAYER VIEWPORT UI ==================== */
+        .player-inner-section {
+            padding: 12px 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .back-navigation-btn {
+            background-color: var(--dark-gray);
+            border: 1px solid #333;
+            color: var(--white);
+            border-radius: 4px;
+            padding: 10px 14px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            cursor: pointer;
+            align-self: flex-start;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .back-navigation-btn:active {
+            border-color: var(--volt-green);
+            color: var(--volt-green);
+        }
+
+        .iframe-video-wrapper {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #000;
+            border: 1px solid #222;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .iframe-video-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+
+        .active-video-details-title {
+            font-size: 0.95rem;
+            font-weight: bold;
+            line-height: 1.4;
+            color: var(--white);
+            border-left: 3px solid var(--volt-green);
+            padding-left: 8px;
+        }
+
+        /* ==================== XNXX-STYLE VIP CONTEXT BOX ==================== */
+        .clean-vip-banner {
+            background-color: var(--dark-gray);
+            border: 2px solid var(--volt-green);
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .vip-banner-desc {
+            color: var(--white);
+            font-size: 0.85rem;
+            line-height: 1.5;
+            font-weight: 500;
+        }
+
+        .vip-direct-action-btn {
+            background-color: var(--volt-green);
+            color: var(--pure-black);
+            border: none;
+            border-radius: 4px;
+            padding: 12px 18px;
+            font-size: 1.05rem;
+            font-weight: bold;
+            text-decoration: none;
+            display: block;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+
+        .vip-direct-action-btn:active {
+            transform: scale(0.98);
+        }
+
+        .section-header-title {
+            font-family: var(--font-logo);
+            font-size: 1.1rem;
+            color: var(--volt-green);
+            border-bottom: 1px solid #333;
+            padding-bottom: 6px;
+            margin-top: 8px;
+            text-transform: uppercase;
+        }
+
+        .system-msg {
+            grid-column: span 2;
+            text-align: center;
+            font-weight: 500;
+            font-size: 0.85rem;
+            padding: 24px 10px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+<!-- 🔔 Notice Pop-up Layer -->
+<div class="popup-overlay" id="noticePopup">
+    <div class="popup-box">
+        <div class="popup-title">18+ WARNING</div>
+        <div class="popup-text">
+            ဤဝဘ်ဆိုက်သည် အသက် ၁၈ နှစ်ပြည့်ပြီးသူများသာ ကြည့်ရှုရန် ဖြစ်ပါသည်။ စည်းကမ်းချက်များကို သဘောတူပါက အောက်ပါခလုတ်ကို နှိပ်၍ ဆက်လက်ဝင်ရောက်နိုင်ပါသည်ဗျာ။
+        </div>
+        <button class="popup-btn" onclick="closeNoticePopup()">ENTER SITE</button>
+    </div>
+</div>
+
+<div class="phone-screen">
+
+    <!-- ==================== DASHBOARD PAGE ==================== -->
+    <div id="dashboardPage" class="page active">
+        
+        <!-- Clean Web Header Component -->
+        <div class="site-header">
+            <div class="site-logo-area">
+                <span class="logo-text-white">LOCALLEAK</span>
+                <span class="logo-text-green">HD</span>
+            </div>
+
+            <!-- Search Field -->
+            <div class="search-wrapper">
+                <input type="text" id="searchField" class="search-input-field" placeholder="Search videos...">
+                <div class="search-submit-icon" onclick="executeSearch()">🔍</div>
+            </div>
+
+            <!-- Tags Nav bar -->
+            <div class="tags-nav-bar">
+                <button class="tag-pill active" onclick="changeCategory('all', this)">All Videos</button>
+                <button class="tag-pill" onclick="changeCategory('asian', this)">Asian</button>
+                <button class="tag-pill" onclick="changeCategory('myanmar', this)">Myanmar</button>
+            </div>
+        </div>
+
+        <!-- 📸 CLEAN PHOTO AUTO SLIDER SECTION -->
+        <div class="slider-section-box">
+            <div class="slider-outer">
+                <div class="slider-frame">
+                    <div class="slider-inner-track" id="sliderTrack">
+                        <!-- Slide 1 -->
+                        <div class="slide-frame-item">
+                            <img src="https://i.ibb.co/Fk2zkyjc/New-Project-114-D3-F3928.png" alt="Slide 1">
+                            <div class="slide-caption">
+                                <p>အလန်းစား မော်ဒယ်သစ်များ နေ့စဉ်တင်ပေးသည်</p>
+                            </div>
+                        </div>
+                        <!-- Slide 2 -->
+                        <div class="slide-frame-item">
+                            <img src="https://i.ibb.co/8n1JzTPc/New-Project-114-E42945-C.png" alt="Slide 2">
+                            <div class="slide-caption">
+                                <p>ကြည်လင်ပြတ်သားသော HD Quality ဗီဒီယိုများ</p>
+                            </div>
+                        </div>
+                        <!-- Slide 3 -->
+                        <div class="slide-frame-item">
+                            <img src="https://i.ibb.co/tTS0zmSh/New-Project-114-DA26311.png" alt="Slide 3">
+                            <div class="slide-caption">
+                                <p>အဖွဲ့ဝင်ပြီး Premium အထူးဗီဒီယိုများ ကြည့်ရှုပါ</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Videos Content Grid -->
+        <div class="video-container-grid">
+            <div class="clean-video-grid" id="mainVideoGrid">
+                <!-- Loaded dynamically via javascript -->
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ==================== PLAYER PAGE ==================== -->
+    <div id="playerPage" class="page">
+        <div class="player-inner-section">
+            <!-- Back Navigation Button -->
+            <button class="back-navigation-btn" onclick="returnToDashboard()">
+                ◀ Back to Home
+            </button>
+
+            <!-- Video Player Frame -->
+            <div class="iframe-video-wrapper" id="iframeWrapper"></div>
+
+            <!-- Video Active Title Metadata -->
+            <div class="active-video-details-title" id="activeVideoTitle">
+                Loading video title details...
+            </div>
+
+            <!-- 💎 PREMIUM VIP REDIRECT CARD -->
+            <div class="clean-vip-banner">
+                <div class="vip-banner-desc">
+                    မြန်မာ အလန်းဇယား // Local Leak // မော်ဒယ်ကားများ // Solo Vd // အထန်မလေးဟာများ // ပရမီယံ Videos တွေကို Vipကြေး ၂၀၀၀၀ကျပ်ဖြင့် လာရောက်ဝင်နိုင်ပါပြီ!
+                </div>
+                <!-- Telegram Direct link with Pre-filled Text -->
+                <a href="https://t.me/your_bot_username?text=Vipဝင်ချင်လို့ပါဗျ%20ငွေလွှဲရမဲ့%20နံပါတ်လေးပို့ထားပေးပါ" target="_blank" class="vip-direct-action-btn">
+                    VIP JOIN NOW
+                </a>
+            </div>
+
+            <!-- Related Contents Title -->
+            <div class="section-header-title">Related Videos</div>
+            <div class="clean-video-grid" id="relatedVideoGrid"></div>
+        </div>
+    </div>
+
+</div>
+
+<!-- ==================== ADSTERRA ADVERTISING CODES ==================== -->
+<!-- Popunder Ad -->
+<script src="https://pl30247190.effectivecpmnetwork.com/1b/c1/8d/1bc18dbccbb0492512d665fe4728d90f.js"></script>
+<!-- Social Bar Ad -->
+<script src="https://pl30247191.effectivecpmnetwork.com/8e/e7/36/8ee736ffc13b594f8960d0a967959a01.js"></script>
+
+<!-- API Core Logic & App States -->
+<script>
+    let searchKeyword = "asian"; 
+    
+    let dashboardPageNum = Math.floor(Math.random() * 5) + 1; 
+    let playerRelatedPageNum = Math.floor(Math.random() * 5) + 6;
+    
+    let isFetchingMore = false;
+    let currentActiveView = "dashboard"; 
+
+    if (!sessionStorage.getItem('seenVideoIds')) {
+        sessionStorage.setItem('seenVideoIds', JSON.stringify([]));
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        loadPortalVideos(searchKeyword, dashboardPageNum, 'mainVideoGrid', false);
+        initPhotoAutoSlider(); 
+
+        document.getElementById('searchField').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                executeSearch();
+                this.blur(); 
+            }
+        });
+
+        // 2-Way Infinite Scroll System for BOTH Dashboard and Player Views
+        window.addEventListener('scroll', () => {
+            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 500) {
+                if (!isFetchingMore) {
+                    isFetchingMore = true;
+
+                    if (currentActiveView === "dashboard") {
+                        dashboardPageNum++;
+                        loadPortalVideos(searchKeyword, dashboardPageNum, 'mainVideoGrid', true);
+                    } else if (currentActiveView === "player") {
+                        playerRelatedPageNum++;
+                        loadPortalVideos(searchKeyword, playerRelatedPageNum, 'relatedVideoGrid', true);
+                    }
+                }
+            }
+        });
+    });
+
+    // Clean Slide Photo System Engine
+    function initPhotoAutoSlider() {
+        const track = document.getElementById('sliderTrack');
+        let index = 0;
+        const totalSlides = 3;
+
+        setInterval(() => {
+            index = (index + 1) % totalSlides;
+            track.style.transform = `translateX(-${index * 33.333}%)`;
+        }, 3500); 
+    }
+
+    function closeNoticePopup() {
+        document.getElementById('noticePopup').style.display = 'none';
+    }
+
+    // Unified API Fetch & Cards Generation
+    async function loadPortalVideos(query, pageNum, containerId, appendMode = false) {
+        const targetGrid = document.getElementById(containerId);
+        
+        if (!appendMode) {
+            targetGrid.innerHTML = `<div class="system-msg" id="gridLoader">Loading videos...</div>`;
+        } else {
+            const scrollLoader = document.createElement('div');
+            scrollLoader.className = 'system-msg';
+            scrollLoader.id = 'infiniteScrollLoader';
+            scrollLoader.innerText = 'Loading more videos...';
+            targetGrid.appendChild(scrollLoader);
+        }
+
+        try {
+            const endpoint = `https://www.eporner.com/api/v2/video/search/?query=${encodeURIComponent(query)}&per_page=20&page=${pageNum}&thumbsize=big`;
+            const res = await fetch(endpoint);
+            const resultData = await res.json();
+
+            if (!appendMode) {
+                targetGrid.innerHTML = ""; 
+            } else {
+                const existingLoader = document.getElementById('infiniteScrollLoader');
+                if (existingLoader) existingLoader.remove();
+            }
+
+            let seenVideoIds = JSON.parse(sessionStorage.getItem('seenVideoIds'));
+
+            if (resultData.videos && resultData.videos.length > 0) {
+                let uniqueCardsAddedCount = 0;
+
+                resultData.videos.forEach(video => {
+                    if (!seenVideoIds.includes(video.id)) {
+                        seenVideoIds.push(video.id); 
+                        uniqueCardsAddedCount++;
+
+                        const rawViews = video.views || Math.floor(Math.random() * 450) + 25;
+                        const formattedViews = rawViews >= 1000 ? (rawViews / 1000).toFixed(1) + 'K' : rawViews;
+
+                        const card = document.createElement('div');
+                        card.className = 'clean-video-card';
+                        card.onclick = () => openVideoPlayer(video.embed, video.title);
+
+                        card.innerHTML = `
+                            <div class="thumb-wrapper">
+                                <img src="${video.default_thumb.src}" alt="Thumb">
+                                <div class="video-duration-badge">${video.length_min}:${video.length_sec < 10 ? '0' + video.length_sec : video.length_sec}</div>
+                            </div>
+                            <div class="meta-description-area">
+                                <div class="meta-title">${video.title}</div>
+                                <div class="meta-stats">
+                                    <span class="stat-views">${formattedViews} views</span>
+                                    <span>${video.added || 'Recent'}</span>
+                                </div>
+                            </div>
+                        `;
+                        targetGrid.appendChild(card);
+                    }
+                });
+
+                sessionStorage.setItem('seenVideoIds', JSON.stringify(seenVideoIds));
+
+                if (uniqueCardsAddedCount === 0) {
+                    isFetchingMore = false;
+                    const nextPage = pageNum + 1;
+                    if (currentActiveView === "dashboard") {
+                        dashboardPageNum = nextPage;
+                        loadPortalVideos(searchKeyword, dashboardPageNum, 'mainVideoGrid', true);
+                    } else {
+                        playerRelatedPageNum = nextPage;
+                        loadPortalVideos(searchKeyword, playerRelatedPageNum, 'relatedVideoGrid', true);
+                    }
+                    return;
+                }
+                
+                isFetchingMore = false;
+            } else {
+                if (!appendMode) {
+                    targetGrid.innerHTML = `<div class="system-msg">No videos found.</div>`;
+                }
+                isFetchingMore = false;
+            }
+        } catch (err) {
+            console.error(err);
+            if (!appendMode) {
+                targetGrid.innerHTML = `<div class="system-msg">Network error. Connection failed.</div>`;
+            }
+            isFetchingMore = false;
+        }
+    }
+
+    function executeSearch() {
+        const value = document.getElementById('searchField').value.trim();
+        searchKeyword = value ? value : "asian"; 
+        
+        dashboardPageNum = Math.floor(Math.random() * 5) + 1;
+        loadPortalVideos(searchKeyword, dashboardPageNum, 'mainVideoGrid', false);
+    }
+
+    function changeCategory(type, element) {
+        document.querySelectorAll('.tag-pill').forEach(btn => btn.classList.remove('active'));
+        element.classList.add('active');
+
+        searchKeyword = (type === 'all') ? 'asian' : type;
+        
+        dashboardPageNum = Math.floor(Math.random() * 5) + 1;
+        loadPortalVideos(searchKeyword, dashboardPageNum, 'mainVideoGrid', false);
+    }
+
+    function openVideoPlayer(embedUrl, title) {
+        currentActiveView = "player";
+        document.getElementById('dashboardPage').classList.remove('active');
+        document.getElementById('playerPage').classList.add('active');
+
+        document.getElementById('iframeWrapper').innerHTML = `
+            <iframe src="${embedUrl}" allowfullscreen scrolling="no"></iframe>
+        `;
+        document.getElementById('activeVideoTitle').innerText = title;
+
+        playerRelatedPageNum = Math.floor(Math.random() * 5) + 6;
+        loadPortalVideos(searchKeyword, playerRelatedPageNum, 'relatedVideoGrid', false);
+        window.scrollTo(0, 0);
+    }
+
+    function returnToDashboard() {
+        currentActiveView = "dashboard";
+        document.getElementById('playerPage').classList.remove('active');
+        document.getElementById('dashboardPage').classList.add('active');
+        document.getElementById('iframeWrapper').innerHTML = ""; 
+        document.getElementById('relatedVideoGrid').innerHTML = ""; 
+
+        dashboardPageNum = dashboardPageNum + Math.floor(Math.random() * 3) + 1;
+        loadPortalVideos(searchKeyword, dashboardPageNum, 'mainVideoGrid', false);
+    }
+</script>
+
+</body>
+</html>
