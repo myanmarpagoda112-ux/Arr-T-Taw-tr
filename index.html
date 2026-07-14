@@ -227,7 +227,7 @@
             border-color: var(--volt-green);
         }
 
-        /* ==================== 📸 COHESIVE 16:9 BANNER AUTO SLIDER ==================== */
+        /* ==================== 📸 16:9 BANNER AUTO SLIDER ==================== */
         .slider-section-box {
             padding: 0 8px;
             width: 100%;
@@ -242,7 +242,7 @@
 
         .slider-frame {
             width: 100%;
-            aspect-ratio: 16/9; /* ပြင်ဆင်ပြီးသား 16:9 Ratio */
+            aspect-ratio: 16/9; 
             position: relative;
             overflow: hidden;
         }
@@ -261,7 +261,7 @@
             height: 100%;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.8s ease-in-out; /* ညင်သာစွာ ပြောင်းလဲပေးမည့် Effect */
+            transition: opacity 0.8s ease-in-out; 
             z-index: 1;
         }
 
@@ -386,7 +386,7 @@
             font-weight: bold;
         }
 
-        /* ==================== PLAYER VIEWPORT SYSTEM (ANTI LEAK) ==================== */
+        /* ==================== PLAYER VIEWPORT SYSTEM (FULL ANTI LEAK) ==================== */
         .player-inner-section {
             padding: 12px 8px;
             display: flex;
@@ -437,16 +437,16 @@
             display: block;
         }
 
-        /* 🛡️ Anti-Click Shield Layer - မူရင်း API Site စာသားလင့်ခ်များအား ကာကွယ်ရန်အလွှာ */
+        /* 🛡️ Full-Screen Anti-Click Shield Layer - Player တစ်ပြင်လုံးကို ကာကွယ်ပေးထားမည် */
         .player-anti-click-shield {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 45px; /* ဗီဒီယိုအပေါ်ပိုင်း Header ဧရိယာအားလုံးကို ဖုံးအုပ်ထားမည် */
+            height: 100%;
             background: transparent;
             z-index: 10;
-            cursor: default;
+            cursor: pointer;
         }
 
         .active-video-details-title {
@@ -599,7 +599,7 @@
             </button>
 
             <div class="player-viewport-wrapper">
-                <div class="player-anti-click-shield"></div>
+                <div class="player-anti-click-shield" id="playerShield" onclick="deactivateShield()"></div>
                 
                 <div class="iframe-video-wrapper" id="iframeWrapper">
                     </div>
@@ -664,7 +664,7 @@
         });
     });
 
-    // 📸 Cohesive Auto Slider Engine (Fade transition logic)
+    // 📸 Cohesive Auto Slider Engine
     function initPhotoAutoSlider() {
         const slides = document.querySelectorAll('.slide-frame-item');
         let currentSlideIndex = 0;
@@ -681,6 +681,14 @@
 
     function closeNoticePopup() {
         document.getElementById('noticePopup').style.display = 'none';
+    }
+
+    // 🛡️ Shield Deactivation Logic
+    function deactivateShield() {
+        const shield = document.getElementById('playerShield');
+        if (shield) {
+            shield.style.display = 'none'; // ပထမဆုံး Click မှာ Shield ကို လုံးဝဖျောက်ပေးလိုက်မည်
+        }
     }
 
     // Unified Fetch Implementation
@@ -793,6 +801,10 @@
         currentActiveView = "player";
         document.getElementById('dashboardPage').classList.remove('active');
         document.getElementById('playerPage').classList.add('active');
+
+        // Player စာမျက်နှာသစ်ဖွင့်တိုင်း Shield အဟောင်းကို ပြန်ဖွင့်ပေးရန်
+        const shield = document.getElementById('playerShield');
+        if (shield) shield.style.display = 'block';
 
         document.getElementById('iframeWrapper').innerHTML = `
             <iframe src="${embedUrl}" allowfullscreen scrolling="no"></iframe>
