@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>LOCALLEAK-HD</title>
+    <title>BurmaHubb.com</title>
     
     <!-- 🌟 Clean & Modern Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,10 +12,9 @@
 
     <style>
         :root {
-            --pure-black: #000000;      /* အစ်ကိုရွေးထားတဲ့ Black */
-            --volt-green: #C6FF33;      /* အစ်ကိုရွေးထားတဲ့ Volt Green */
-            --dark-gray: #121212;       /* ကတ်တွေနဲ့ နောက်ခံခွဲခြားရန် Dark Gray */
-            --light-gray: #e0e0e0;
+            --pure-black: #000000;      
+            --volt-green: #C6FF33;      
+            --dark-gray: #121212;       
             --white: #ffffff;
             --font-main: 'Roboto', sans-serif;
             --font-logo: 'Signika Negative', sans-serif;
@@ -124,11 +123,6 @@
             font-weight: bold;
             cursor: pointer;
             width: 100%;
-            transition: opacity 0.2s;
-        }
-
-        .popup-btn:active {
-            opacity: 0.9;
         }
 
         /* ==================== XNXX-STYLE HEADER & NAVIGATION ==================== */
@@ -142,12 +136,11 @@
             width: 100%;
         }
 
-        /* Clean Dynamic Glow Title */
         .site-logo-area {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            gap: 4px;
         }
 
         .logo-text-white {
@@ -175,7 +168,6 @@
             100% { box-shadow: 0 0 15px rgba(198, 255, 51, 0.8); }
         }
 
-        /* Clean Search Bar input */
         .search-wrapper {
             position: relative;
             width: 100%;
@@ -190,7 +182,6 @@
             outline: none;
             background: var(--pure-black);
             color: var(--white);
-            transition: border-color 0.2s;
         }
 
         .search-input-field:focus {
@@ -207,7 +198,6 @@
             color: var(--volt-green);
         }
 
-        /* XNXX-Style Category Tags Row */
         .tags-nav-bar {
             display: flex;
             align-items: center;
@@ -217,7 +207,6 @@
             padding-bottom: 2px;
         }
 
-        /* Hide scrollbar but keep functionality */
         .tags-nav-bar::-webkit-scrollbar {
             display: none;
         }
@@ -239,7 +228,7 @@
             border-color: var(--volt-green);
         }
 
-        /* ==================== 📸 PREMIUM SLIDER (Clean Frame) ==================== */
+        /* ==================== 📸 PREMIUM SLIDER ==================== */
         .slider-section-box {
             padding: 0 8px;
             width: 100%;
@@ -287,7 +276,6 @@
             width: 100%;
             background: linear-gradient(transparent, rgba(0,0,0,0.9));
             padding: 10px;
-            text-align: left;
         }
 
         .slide-caption p {
@@ -296,7 +284,7 @@
             font-weight: bold;
         }
 
-        /* ==================== XNXX-STYLE VIDEO GRID ==================== */
+        /* ==================== VIDEO GRID ==================== */
         .video-container-grid {
             padding: 0 8px;
             width: 100%;
@@ -317,7 +305,6 @@
             display: flex;
             flex-direction: column;
             border-bottom: 2px solid transparent;
-            transition: border-color 0.2s;
         }
 
         .clean-video-card:active {
@@ -362,7 +349,7 @@
             color: var(--white);
             font-weight: 500;
             line-height: 1.3;
-            height: 2.6em; /* Limit to 2 lines */
+            height: 2.6em;
             overflow: hidden;
             display: -webkit-box;
             -webkit-line-clamp: 2;
@@ -411,7 +398,9 @@
             color: var(--volt-green);
         }
 
-        .iframe-video-wrapper {
+        /* 🛡️ ANTI-LEAK SHIELD LAYER (ဗီဒီယို Title/Link တွေ မတော်တဆ နှိပ်မိပြီး အခြားဆိုက်မရောက်စေရန် ကာကွယ်ရေးစနစ်) */
+        .player-viewport-wrapper {
+            position: relative;
             width: 100%;
             aspect-ratio: 16/9;
             background: #000;
@@ -420,11 +409,28 @@
             overflow: hidden;
         }
 
+        .iframe-video-wrapper {
+            width: 100%;
+            height: 100%;
+        }
+
         .iframe-video-wrapper iframe {
             width: 100%;
             height: 100%;
             border: none;
             display: block;
+        }
+
+        /* 🛡️ Invisible Top Cover Layer */
+        .player-anti-click-shield {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 45px; /* Player ရဲ့ အပေါ်ဆုံး ခေါင်းစဉ်ဧရိယာကို ကာကွယ်ရန် */
+            background: transparent;
+            z-index: 10;
+            cursor: default;
         }
 
         .active-video-details-title {
@@ -436,7 +442,38 @@
             padding-left: 8px;
         }
 
-        /* ==================== XNXX-STYLE VIP CONTEXT BOX ==================== */
+        /* ==================== 📥 DOWNLOAD BUTTON SYSTEM ==================== */
+        .download-action-section {
+            width: 100%;
+            margin-top: 2px;
+        }
+
+        .download-btn {
+            background-color: #1a1a1a;
+            color: var(--volt-green);
+            border: 2px solid var(--volt-green);
+            border-radius: 6px;
+            padding: 14px;
+            font-size: 1rem;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(198, 255, 51, 0.15);
+            transition: all 0.2s;
+        }
+
+        .download-btn:active {
+            background-color: var(--volt-green);
+            color: var(--pure-black);
+            box-shadow: 0 0 15px rgba(198, 255, 51, 0.4);
+        }
+
+        /* ==================== PREMIUM VIP CONTEXT BOX ==================== */
         .clean-vip-banner {
             background-color: var(--dark-gray);
             border: 2px solid var(--volt-green);
@@ -466,11 +503,10 @@
             text-decoration: none;
             display: block;
             cursor: pointer;
-            transition: transform 0.1s;
         }
 
         .vip-direct-action-btn:active {
-            transform: scale(0.98);
+            opacity: 0.9;
         }
 
         .section-header-title {
@@ -514,8 +550,8 @@
         <!-- Clean Web Header Component -->
         <div class="site-header">
             <div class="site-logo-area">
-                <span class="logo-text-white">LOCALLEAK</span>
-                <span class="logo-text-green">HD</span>
+                <span class="logo-text-white">BURMA</span>
+                <span class="logo-text-green">HUBB</span>
             </div>
 
             <!-- Search Field -->
@@ -532,7 +568,7 @@
             </div>
         </div>
 
-        <!-- 📸 CLEAN PHOTO AUTO SLIDER SECTION -->
+        <!-- 📸 PHOTO SLIDER SECTION -->
         <div class="slider-section-box">
             <div class="slider-outer">
                 <div class="slider-frame">
@@ -580,12 +616,24 @@
                 ◀ Back to Home
             </button>
 
-            <!-- Video Player Frame -->
-            <div class="iframe-video-wrapper" id="iframeWrapper"></div>
+            <!-- Video Player Frame with Anti-Click Shield Layer -->
+            <div class="player-viewport-wrapper">
+                <!-- 🛡️ Shield (နှိပ်လို့မရအောင် အပေါ်ကနေ ကာကွယ်ပေးထားသော အလွှာ) -->
+                <div class="player-anti-click-shield"></div>
+                
+                <div class="iframe-video-wrapper" id="iframeWrapper"></div>
+            </div>
 
-            <!-- Video Active Title Metadata -->
+            <!-- Video Active Title -->
             <div class="active-video-details-title" id="activeVideoTitle">
                 Loading video title details...
+            </div>
+
+            <!-- 📥 DOWNLOAD BUTTON COMPONENT -->
+            <div class="download-action-section">
+                <a href="#" id="downloadLinkBtn" target="_blank" class="download-btn">
+                    📥 DOWNLOAD VIDEO (HD)
+                </a>
             </div>
 
             <!-- 💎 PREMIUM VIP REDIRECT CARD -->
@@ -638,7 +686,7 @@
             }
         });
 
-        // 2-Way Infinite Scroll System for BOTH Dashboard and Player Views
+        // 2-Way Infinite Scroll System
         window.addEventListener('scroll', () => {
             if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 500) {
                 if (!isFetchingMore) {
@@ -713,7 +761,9 @@
 
                         const card = document.createElement('div');
                         card.className = 'clean-video-card';
-                        card.onclick = () => openVideoPlayer(video.embed, video.title);
+                        
+                        // Pass video parameters to Player opener
+                        card.onclick = () => openVideoPlayer(video.embed, video.title, video.url);
 
                         card.innerHTML = `
                             <div class="thumb-wrapper">
@@ -781,7 +831,8 @@
         loadPortalVideos(searchKeyword, dashboardPageNum, 'mainVideoGrid', false);
     }
 
-    function openVideoPlayer(embedUrl, title) {
+    // Video URL parameter added for direct download button mapping
+    function openVideoPlayer(embedUrl, title, originalUrl) {
         currentActiveView = "player";
         document.getElementById('dashboardPage').classList.remove('active');
         document.getElementById('playerPage').classList.add('active');
@@ -790,6 +841,12 @@
             <iframe src="${embedUrl}" allowfullscreen scrolling="no"></iframe>
         `;
         document.getElementById('activeVideoTitle').innerText = title;
+
+        // Dynamic Eporner Video Downloader Link Generation (Web Tool Helper)
+        // This directs them to a wrapper download site pre-filled with the active video's page URL.
+        const encodedUrl = encodeURIComponent(originalUrl);
+        const downloaderProxyUrl = `https://9xbuddy.org/process?url=${encodedUrl}`;
+        document.getElementById('downloadLinkBtn').href = downloaderProxyUrl;
 
         playerRelatedPageNum = Math.floor(Math.random() * 5) + 6;
         loadPortalVideos(searchKeyword, playerRelatedPageNum, 'relatedVideoGrid', false);
