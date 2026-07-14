@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>BurmaHubb.com</title>
     
-    <!-- 🌟 Clean & Modern Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,500&family=Signika+Negative:wght@600;700&display=swap" rel="stylesheet">
@@ -125,7 +124,7 @@
             width: 100%;
         }
 
-        /* ==================== XNXX-STYLE HEADER & NAVIGATION ==================== */
+        /* ==================== HEADER & NAVIGATION ==================== */
         .site-header {
             background-color: var(--dark-gray);
             border-bottom: 2px solid var(--volt-green);
@@ -228,7 +227,7 @@
             border-color: var(--volt-green);
         }
 
-        /* ==================== 📸 PREMIUM SLIDER ==================== */
+        /* ==================== 📸 CLICKABLE SLIDER BANNERS ==================== */
         .slider-section-box {
             padding: 0 8px;
             width: 100%;
@@ -260,6 +259,8 @@
             height: 100%;
             position: relative;
             flex-shrink: 0;
+            display: block;
+            text-decoration: none;
         }
 
         .slide-frame-item img {
@@ -398,7 +399,6 @@
             color: var(--volt-green);
         }
 
-        /* 🛡️ ANTI-LEAK SHIELD LAYER (ဗီဒီယို Title/Link တွေ မတော်တဆ နှိပ်မိပြီး အခြားဆိုက်မရောက်စေရန် ကာကွယ်ရေးစနစ်) */
         .player-viewport-wrapper {
             position: relative;
             width: 100%;
@@ -421,16 +421,14 @@
             display: block;
         }
 
-        /* 🛡️ Invisible Top Cover Layer */
         .player-anti-click-shield {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 45px; /* Player ရဲ့ အပေါ်ဆုံး ခေါင်းစဉ်ဧရိယာကို ကာကွယ်ရန် */
+            height: 45px;
             background: transparent;
             z-index: 10;
-            cursor: default;
         }
 
         .active-video-details-title {
@@ -442,10 +440,12 @@
             padding-left: 8px;
         }
 
-        /* ==================== 📥 DOWNLOAD BUTTON SYSTEM ==================== */
-        .download-action-section {
+        /* ==================== 🛠️ ACTION BUTTONS (DOWNLOAD & SAVE) ==================== */
+        .player-controls-row {
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 8px;
             width: 100%;
-            margin-top: 2px;
         }
 
         .download-btn {
@@ -454,26 +454,42 @@
             border: 2px solid var(--volt-green);
             border-radius: 6px;
             padding: 14px;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: bold;
             text-align: center;
             text-decoration: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 6px;
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(198, 255, 51, 0.15);
-            transition: all 0.2s;
         }
 
         .download-btn:active {
             background-color: var(--volt-green);
             color: var(--pure-black);
-            box-shadow: 0 0 15px rgba(198, 255, 51, 0.4);
         }
 
-        /* ==================== PREMIUM VIP CONTEXT BOX ==================== */
+        /* ❤️ Bookmark Button CSS */
+        .save-btn {
+            background-color: #1a1a1a;
+            color: #ff4444;
+            border: 2px solid #ff4444;
+            border-radius: 6px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .save-btn.saved {
+            background-color: #ff4444;
+            color: var(--pure-black);
+        }
+
+        /* ==================== PREMIUM VIP BOX ==================== */
         .clean-vip-banner {
             background-color: var(--dark-gray);
             border: 2px solid var(--volt-green);
@@ -502,11 +518,6 @@
             font-weight: bold;
             text-decoration: none;
             display: block;
-            cursor: pointer;
-        }
-
-        .vip-direct-action-btn:active {
-            opacity: 0.9;
         }
 
         .section-header-title {
@@ -531,7 +542,6 @@
 </head>
 <body>
 
-<!-- 🔔 Notice Pop-up Layer -->
 <div class="popup-overlay" id="noticePopup">
     <div class="popup-box">
         <div class="popup-title">18+ WARNING</div>
@@ -544,110 +554,87 @@
 
 <div class="phone-screen">
 
-    <!-- ==================== DASHBOARD PAGE ==================== -->
     <div id="dashboardPage" class="page active">
         
-        <!-- Clean Web Header Component -->
         <div class="site-header">
             <div class="site-logo-area">
                 <span class="logo-text-white">BURMA</span>
                 <span class="logo-text-green">HUBB</span>
             </div>
 
-            <!-- Search Field -->
             <div class="search-wrapper">
                 <input type="text" id="searchField" class="search-input-field" placeholder="Search videos...">
                 <div class="search-submit-icon" onclick="executeSearch()">🔍</div>
             </div>
 
-            <!-- Tags Nav bar -->
             <div class="tags-nav-bar">
                 <button class="tag-pill active" onclick="changeCategory('all', this)">All Videos</button>
                 <button class="tag-pill" onclick="changeCategory('asian', this)">Asian</button>
                 <button class="tag-pill" onclick="changeCategory('myanmar', this)">Myanmar</button>
+                <button class="tag-pill" style="color: #ff4444;" onclick="changeCategory('saved', this)">❤️ Saved Videos</button>
             </div>
         </div>
 
-        <!-- 📸 PHOTO SLIDER SECTION -->
-        <div class="slider-section-box">
+        <div class="slider-section-box" id="sliderSection">
             <div class="slider-outer">
                 <div class="slider-frame">
                     <div class="slider-inner-track" id="sliderTrack">
-                        <!-- Slide 1 -->
-                        <div class="slide-frame-item">
+                        <a href="https://t.me/your_telegram_channel_link" target="_blank" class="slide-frame-item">
                             <img src="https://i.ibb.co/Fk2zkyjc/New-Project-114-D3-F3928.png" alt="Slide 1">
-                            <div class="slide-caption">
-                                <p>အလန်းစား မော်ဒယ်သစ်များ နေ့စဉ်တင်ပေးသည်</p>
-                            </div>
-                        </div>
-                        <!-- Slide 2 -->
-                        <div class="slide-frame-item">
+                            <div class="slide-caption"><p>VIP Group ဝင်ရန် နှိပ်ပါ</p></div>
+                        </a>
+                        <a href="https://t.me/your_telegram_channel_link" target="_blank" class="slide-frame-item">
                             <img src="https://i.ibb.co/8n1JzTPc/New-Project-114-E42945-C.png" alt="Slide 2">
-                            <div class="slide-caption">
-                                <p>ကြည်လင်ပြတ်သားသော HD Quality ဗီဒီယိုများ</p>
-                            </div>
-                        </div>
-                        <!-- Slide 3 -->
-                        <div class="slide-frame-item">
+                            <div class="slide-caption"><p>ကြည်လင်ပြတ်သားသော HD Quality ဗီဒီယိုများ</p></div>
+                        </a>
+                        <a href="https://t.me/your_telegram_channel_link" target="_blank" class="slide-frame-item">
                             <img src="https://i.ibb.co/tTS0zmSh/New-Project-114-DA26311.png" alt="Slide 3">
-                            <div class="slide-caption">
-                                <p>အဖွဲ့ဝင်ပြီး Premium အထူးဗီဒီယိုများ ကြည့်ရှုပါ</p>
-                            </div>
-                        </div>
+                            <div class="slide-caption"><p>Exclusive မြန်မာကားသစ်များ ကြည့်ရှုရန်</p></div>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Videos Content Grid -->
         <div class="video-container-grid">
-            <div class="clean-video-grid" id="mainVideoGrid">
-                <!-- Loaded dynamically via javascript -->
-            </div>
+            <div class="clean-video-grid" id="mainVideoGrid"></div>
         </div>
     </div>
 
 
-    <!-- ==================== PLAYER PAGE ==================== -->
     <div id="playerPage" class="page">
         <div class="player-inner-section">
-            <!-- Back Navigation Button -->
             <button class="back-navigation-btn" onclick="returnToDashboard()">
                 ◀ Back to Home
             </button>
 
-            <!-- Video Player Frame with Anti-Click Shield Layer -->
             <div class="player-viewport-wrapper">
-                <!-- 🛡️ Shield (နှိပ်လို့မရအောင် အပေါ်ကနေ ကာကွယ်ပေးထားသော အလွှာ) -->
                 <div class="player-anti-click-shield"></div>
-                
                 <div class="iframe-video-wrapper" id="iframeWrapper"></div>
             </div>
 
-            <!-- Video Active Title -->
             <div class="active-video-details-title" id="activeVideoTitle">
-                Loading video title details...
+                Loading video details...
             </div>
 
-            <!-- 📥 DOWNLOAD BUTTON COMPONENT -->
-            <div class="download-action-section">
+            <div class="player-controls-row">
                 <a href="#" id="downloadLinkBtn" target="_blank" class="download-btn">
-                    📥 DOWNLOAD VIDEO (HD)
+                    📥 DOWNLOAD VIDEO
                 </a>
+                <button id="saveVideoBtn" class="save-btn" onclick="toggleSaveCurrentVideo()">
+                    ❤️
+                </button>
             </div>
 
-            <!-- 💎 PREMIUM VIP REDIRECT CARD -->
             <div class="clean-vip-banner">
                 <div class="vip-banner-desc">
-                    မြန်မာ အလန်းဇယား // Local Leak // မော်ဒယ်ကားများ // Solo Vd // အထန်မလေးဟာများ // ပရမီယံ Videos တွေကို Vipကြေး ၂၀၀၀၀ကျပ်ဖြင့် လာရောက်ဝင်နိုင်ပါပြီ!
+                    မြန်မာ အလန်းဇယား // Local Leak // မော်ဒယ်ကားများ // Solo Vd // ပရမီယံ Videos တွေကို Vipကြေး ၂၀၀၀၀ကျပ်ဖြင့် ဝင်နိုင်ပါပြီ!
                 </div>
-                <!-- Telegram Direct link with Pre-filled Text -->
-                <a href="https://t.me/your_bot_username?text=Vipဝင်ချင်လို့ပါဗျ%20ငွေလွှဲရမဲ့%20နံပါတ်လေးပို့ထားပေးပါ" target="_blank" class="vip-direct-action-btn">
+                <a href="https://t.me/your_bot_username?text=Vipဝင်ချင်လို့ပါဗျ" target="_blank" class="vip-direct-action-btn">
                     VIP JOIN NOW
                 </a>
             </div>
 
-            <!-- Related Contents Title -->
             <div class="section-header-title">Related Videos</div>
             <div class="clean-video-grid" id="relatedVideoGrid"></div>
         </div>
@@ -655,25 +642,22 @@
 
 </div>
 
-<!-- ==================== ADSTERRA ADVERTISING CODES ==================== -->
-<!-- Popunder Ad -->
 <script src="https://pl30247190.effectivecpmnetwork.com/1b/c1/8d/1bc18dbccbb0492512d665fe4728d90f.js"></script>
-<!-- Social Bar Ad -->
 <script src="https://pl30247191.effectivecpmnetwork.com/8e/e7/36/8ee736ffc13b594f8960d0a967959a01.js"></script>
 
-<!-- API Core Logic & App States -->
 <script>
     let searchKeyword = "asian"; 
-    
     let dashboardPageNum = Math.floor(Math.random() * 5) + 1; 
     let playerRelatedPageNum = Math.floor(Math.random() * 5) + 6;
-    
     let isFetchingMore = false;
     let currentActiveView = "dashboard"; 
+    
+    // Active Playing Video Object Holder
+    let currentPlayingVideoData = null;
 
-    if (!sessionStorage.getItem('seenVideoIds')) {
-        sessionStorage.setItem('seenVideoIds', JSON.stringify([]));
-    }
+    // Initialize HTML5 LocalStorage Safe Databases
+    if (!sessionStorage.getItem('seenVideoIds')) sessionStorage.setItem('seenVideoIds', JSON.stringify([]));
+    if (!localStorage.getItem('savedWebPortalVideos')) localStorage.setItem('savedWebPortalVideos', JSON.stringify([]));
 
     document.addEventListener("DOMContentLoaded", () => {
         loadPortalVideos(searchKeyword, dashboardPageNum, 'mainVideoGrid', false);
@@ -686,12 +670,12 @@
             }
         });
 
-        // 2-Way Infinite Scroll System
+        // Infinite Scroll Engine
         window.addEventListener('scroll', () => {
+            if (searchKeyword === "saved_playlist_view") return; // Disable infinite scroll on Saved tab
             if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 500) {
                 if (!isFetchingMore) {
                     isFetchingMore = true;
-
                     if (currentActiveView === "dashboard") {
                         dashboardPageNum++;
                         loadPortalVideos(searchKeyword, dashboardPageNum, 'mainVideoGrid', true);
@@ -704,14 +688,11 @@
         });
     });
 
-    // Clean Slide Photo System Engine
     function initPhotoAutoSlider() {
         const track = document.getElementById('sliderTrack');
         let index = 0;
-        const totalSlides = 3;
-
         setInterval(() => {
-            index = (index + 1) % totalSlides;
+            index = (index + 1) % 3;
             track.style.transform = `translateX(-${index * 33.333}%)`;
         }, 3500); 
     }
@@ -720,10 +701,41 @@
         document.getElementById('noticePopup').style.display = 'none';
     }
 
-    // Unified API Fetch & Cards Generation
+    // Dynamic Engine handling API and Local Storage Saved Database
     async function loadPortalVideos(query, pageNum, containerId, appendMode = false) {
         const targetGrid = document.getElementById(containerId);
         
+        // Handle Bookmark Custom Offline Tab Mode
+        if (query === "saved_playlist_view") {
+            const savedList = JSON.parse(localStorage.getItem('savedWebPortalVideos'));
+            targetGrid.innerHTML = "";
+            if (!savedList || savedList.length === 0) {
+                targetGrid.innerHTML = `<div class="system-msg">❤️ သိမ်းဆည်းထားသော ဗီဒီယိုများ မရှိသေးပါဗျာ။</div>`;
+                return;
+            }
+            savedList.forEach(video => {
+                const card = document.createElement('div');
+                card.className = 'clean-video-card';
+                card.onclick = () => openVideoPlayer(video.embed, video.title, video.url, video.thumb, video.duration, video.added);
+                card.innerHTML = `
+                    <div class="thumb-wrapper">
+                        <img src="${video.thumb}" alt="Thumb">
+                        <div class="video-duration-badge">${video.duration}</div>
+                    </div>
+                    <div class="meta-description-area">
+                        <div class="meta-title">${video.title}</div>
+                        <div class="meta-stats">
+                            <span class="stat-views">Saved Video</span>
+                            <span>${video.added}</span>
+                        </div>
+                    </div>
+                `;
+                targetGrid.appendChild(card);
+            });
+            return;
+        }
+
+        // Standard API Request Engine Mode
         if (!appendMode) {
             targetGrid.innerHTML = `<div class="system-msg" id="gridLoader">Loading videos...</div>`;
         } else {
@@ -739,9 +751,8 @@
             const res = await fetch(endpoint);
             const resultData = await res.json();
 
-            if (!appendMode) {
-                targetGrid.innerHTML = ""; 
-            } else {
+            if (!appendMode) targetGrid.innerHTML = ""; 
+            else {
                 const existingLoader = document.getElementById('infiniteScrollLoader');
                 if (existingLoader) existingLoader.remove();
             }
@@ -749,26 +760,21 @@
             let seenVideoIds = JSON.parse(sessionStorage.getItem('seenVideoIds'));
 
             if (resultData.videos && resultData.videos.length > 0) {
-                let uniqueCardsAddedCount = 0;
-
                 resultData.videos.forEach(video => {
                     if (!seenVideoIds.includes(video.id)) {
                         seenVideoIds.push(video.id); 
-                        uniqueCardsAddedCount++;
-
                         const rawViews = video.views || Math.floor(Math.random() * 450) + 25;
                         const formattedViews = rawViews >= 1000 ? (rawViews / 1000).toFixed(1) + 'K' : rawViews;
+                        const durationStr = `${video.length_min}:${video.length_sec < 10 ? '0' + video.length_sec : video.length_sec}`;
 
                         const card = document.createElement('div');
                         card.className = 'clean-video-card';
-                        
-                        // Pass video parameters to Player opener
-                        card.onclick = () => openVideoPlayer(video.embed, video.title, video.url);
+                        card.onclick = () => openVideoPlayer(video.embed, video.title, video.url, video.default_thumb.src, durationStr, video.added);
 
                         card.innerHTML = `
                             <div class="thumb-wrapper">
                                 <img src="${video.default_thumb.src}" alt="Thumb">
-                                <div class="video-duration-badge">${video.length_min}:${video.length_sec < 10 ? '0' + video.length_sec : video.length_sec}</div>
+                                <div class="video-duration-badge">${durationStr}</div>
                             </div>
                             <div class="meta-description-area">
                                 <div class="meta-title">${video.title}</div>
@@ -781,34 +787,15 @@
                         targetGrid.appendChild(card);
                     }
                 });
-
                 sessionStorage.setItem('seenVideoIds', JSON.stringify(seenVideoIds));
-
-                if (uniqueCardsAddedCount === 0) {
-                    isFetchingMore = false;
-                    const nextPage = pageNum + 1;
-                    if (currentActiveView === "dashboard") {
-                        dashboardPageNum = nextPage;
-                        loadPortalVideos(searchKeyword, dashboardPageNum, 'mainVideoGrid', true);
-                    } else {
-                        playerRelatedPageNum = nextPage;
-                        loadPortalVideos(searchKeyword, playerRelatedPageNum, 'relatedVideoGrid', true);
-                    }
-                    return;
-                }
-                
                 isFetchingMore = false;
             } else {
-                if (!appendMode) {
-                    targetGrid.innerHTML = `<div class="system-msg">No videos found.</div>`;
-                }
+                if (!appendMode) targetGrid.innerHTML = `<div class="system-msg">No videos found.</div>`;
                 isFetchingMore = false;
             }
         } catch (err) {
             console.error(err);
-            if (!appendMode) {
-                targetGrid.innerHTML = `<div class="system-msg">Network error. Connection failed.</div>`;
-            }
+            if (!appendMode) targetGrid.innerHTML = `<div class="system-msg">Network error.</div>`;
             isFetchingMore = false;
         }
     }
@@ -816,8 +803,8 @@
     function executeSearch() {
         const value = document.getElementById('searchField').value.trim();
         searchKeyword = value ? value : "asian"; 
-        
-        dashboardPageNum = Math.floor(Math.random() * 5) + 1;
+        document.getElementById('sliderSection').style.display = "block";
+        dashboardPageNum = 1;
         loadPortalVideos(searchKeyword, dashboardPageNum, 'mainVideoGrid', false);
     }
 
@@ -825,32 +812,66 @@
         document.querySelectorAll('.tag-pill').forEach(btn => btn.classList.remove('active'));
         element.classList.add('active');
 
-        searchKeyword = (type === 'all') ? 'asian' : type;
-        
-        dashboardPageNum = Math.floor(Math.random() * 5) + 1;
-        loadPortalVideos(searchKeyword, dashboardPageNum, 'mainVideoGrid', false);
+        if (type === 'saved') {
+            searchKeyword = "saved_playlist_view";
+            document.getElementById('sliderSection').style.display = "none"; // Hide slider to save space
+            loadPortalVideos(searchKeyword, 1, 'mainVideoGrid', false);
+        } else {
+            document.getElementById('sliderSection').style.display = "block";
+            searchKeyword = (type === 'all') ? 'asian' : type;
+            dashboardPageNum = 1;
+            loadPortalVideos(searchKeyword, dashboardPageNum, 'mainVideoGrid', false);
+        }
     }
 
-    // Video URL parameter added for direct download button mapping
-    function openVideoPlayer(embedUrl, title, originalUrl) {
+    function openVideoPlayer(embedUrl, title, originalUrl, thumbUrl, duration, addedTime) {
         currentActiveView = "player";
         document.getElementById('dashboardPage').classList.remove('active');
         document.getElementById('playerPage').classList.add('active');
 
-        document.getElementById('iframeWrapper').innerHTML = `
-            <iframe src="${embedUrl}" allowfullscreen scrolling="no"></iframe>
-        `;
+        document.getElementById('iframeWrapper').innerHTML = `<iframe src="${embedUrl}" allowfullscreen scrolling="no"></iframe>`;
         document.getElementById('activeVideoTitle').innerText = title;
 
-        // Dynamic Eporner Video Downloader Link Generation (Web Tool Helper)
-        // This directs them to a wrapper download site pre-filled with the active video's page URL.
-        const encodedUrl = encodeURIComponent(originalUrl);
-        const downloaderProxyUrl = `https://9xbuddy.org/process?url=${encodedUrl}`;
-        document.getElementById('downloadLinkBtn').href = downloaderProxyUrl;
+        // Downloader Proxy Setup
+        document.getElementById('downloadLinkBtn').href = `https://9xbuddy.org/process?url=${encodeURIComponent(originalUrl)}`;
+
+        // Map Active Data into Object for Save Core Functionality
+        currentPlayingVideoData = {
+            embed: embedUrl,
+            title: title,
+            url: originalUrl,
+            thumb: thumbUrl,
+            duration: duration,
+            added: addedTime
+        };
+
+        // Render Heart Icon Active State State Check
+        const savedList = JSON.parse(localStorage.getItem('savedWebPortalVideos'));
+        const isAlreadySaved = savedList.some(v => v.url === originalUrl);
+        const saveBtn = document.getElementById('saveVideoBtn');
+        if (isAlreadySaved) saveBtn.classList.add('saved');
+        else saveBtn.classList.remove('saved');
 
         playerRelatedPageNum = Math.floor(Math.random() * 5) + 6;
-        loadPortalVideos(searchKeyword, playerRelatedPageNum, 'relatedVideoGrid', false);
+        loadPortalVideos(searchKeyword === "saved_playlist_view" ? "asian" : searchKeyword, playerRelatedPageNum, 'relatedVideoGrid', false);
         window.scrollTo(0, 0);
+    }
+
+    // ❤️ Bookmark Add/Remove Controller Logic
+    function toggleSaveCurrentVideo() {
+        if (!currentPlayingVideoData) return;
+        let savedList = JSON.parse(localStorage.getItem('savedWebPortalVideos'));
+        const index = savedList.findIndex(v => v.url === currentPlayingVideoData.url);
+        const saveBtn = document.getElementById('saveVideoBtn');
+
+        if (index > -1) {
+            savedList.splice(index, 1); // Remove if exist
+            saveBtn.classList.remove('saved');
+        } else {
+            savedList.push(currentPlayingVideoData); // Save new item
+            saveBtn.classList.add('saved');
+        }
+        localStorage.setItem('savedWebPortalVideos', JSON.stringify(savedList));
     }
 
     function returnToDashboard() {
@@ -860,8 +881,12 @@
         document.getElementById('iframeWrapper').innerHTML = ""; 
         document.getElementById('relatedVideoGrid').innerHTML = ""; 
 
-        dashboardPageNum = dashboardPageNum + Math.floor(Math.random() * 3) + 1;
-        loadPortalVideos(searchKeyword, dashboardPageNum, 'mainVideoGrid', false);
+        if (searchKeyword === "saved_playlist_view") {
+            loadPortalVideos(searchKeyword, 1, 'mainVideoGrid', false);
+        } else {
+            dashboardPageNum = dashboardPageNum + 1;
+            loadPortalVideos(searchKeyword, dashboardPageNum, 'mainVideoGrid', false);
+        }
     }
 </script>
 
