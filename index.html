@@ -7,7 +7,9 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,500&family=Signika+Negative:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,500&family=Signika+Negative:wght@600;700&display=swap" rel="stylesheet"> 
+
+    <script src="https://pl30365127.effectivecpmnetwork.com/a6/25/48/a62548ab65dbd153162c88be71e77616.js"></script>
 
     <style>
         :root {
@@ -17,7 +19,7 @@
             --white: #ffffff;
             --font-main: 'Roboto', sans-serif;
             --font-logo: 'Signika Negative', sans-serif;
-        }
+        } 
 
         /* 📱 Mobile Baseline Reset */
         * {
@@ -26,21 +28,21 @@
             padding: 0;
             font-family: var(--font-main);
             -webkit-tap-highlight-color: transparent;
-        }
+        } 
 
         html, body {
             width: 100%;
             overflow-x: hidden; 
             background-color: var(--pure-black);
             color: var(--white);
-        }
+        } 
 
         body {
             display: flex;
             justify-content: center;
             align-items: flex-start;
             min-height: 100vh;
-        }
+        } 
 
         /* 📱 Phone Container Boundary */
         .phone-screen {
@@ -53,7 +55,7 @@
             position: relative;
             overflow-x: hidden;
             background-color: var(--pure-black);
-        }
+        } 
 
         .page { 
             display: none; 
@@ -63,7 +65,7 @@
             display: flex;
             flex-direction: column;
             gap: 12px;
-        }
+        } 
 
         /* ==================== NOTICE POP-UP UI ==================== */
         .popup-overlay {
@@ -78,7 +80,7 @@
             align-items: center;
             z-index: 9999;
             padding: 20px;
-        }
+        } 
 
         .popup-box {
             width: 100%;
@@ -92,10 +94,46 @@
             box-shadow: 0 0 20px rgba(198, 255, 51, 0.2);
         }
 
+        /* 🎬 SMARTLINK 16:9 AD POPUP */
+        .ad-popup-box {
+            width: 100%;
+            max-width: 380px;
+            background: var(--dark-gray);
+            border: 2px solid var(--volt-green);
+            border-radius: 12px;
+            padding: 0;
+            overflow: hidden;
+            text-align: center;
+            animation: popIn 0.2s ease-out;
+            box-shadow: 0 0 25px rgba(198, 255, 51, 0.3);
+        }
+
+        .ad-frame-wrapper {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #000;
+            position: relative;
+        }
+
+        .ad-frame-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .ad-timer-bar {
+            background: var(--pure-black);
+            color: var(--volt-green);
+            padding: 8px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            border-top: 1px solid #222;
+        }
+
         @keyframes popIn {
             from { transform: scale(0.9); opacity: 0; }
             to { transform: scale(1); opacity: 1; }
-        }
+        } 
 
         .popup-title {
             font-family: var(--font-logo);
@@ -103,14 +141,14 @@
             color: var(--volt-green);
             margin-bottom: 12px;
             letter-spacing: 1px;
-        }
+        } 
 
         .popup-text {
             font-size: 0.9rem;
             color: var(--white);
             line-height: 1.6;
             margin-bottom: 24px;
-        }
+        } 
 
         .popup-btn {
             background: var(--volt-green);
@@ -122,7 +160,7 @@
             font-weight: bold;
             cursor: pointer;
             width: 100%;
-        }
+        } 
 
         /* ==================== SITE HEADER & NAVIGATION ==================== */
         .site-header {
@@ -133,14 +171,14 @@
             flex-direction: column;
             gap: 12px;
             width: 100%;
-        }
+        } 
 
         .site-logo-area {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 6px;
-        }
+        } 
 
         .logo-text-white {
             font-family: var(--font-logo);
@@ -148,7 +186,7 @@
             font-weight: bold;
             color: var(--white);
             letter-spacing: -0.5px;
-        }
+        } 
 
         .logo-text-green {
             font-family: var(--font-logo);
@@ -160,17 +198,17 @@
             border-radius: 4px;
             letter-spacing: -0.5px;
             animation: pulseGlow 2s infinite alternate;
-        }
+        } 
 
         @keyframes pulseGlow {
             0% { box-shadow: 0 0 5px rgba(198, 255, 51, 0.4); }
             100% { box-shadow: 0 0 15px rgba(198, 255, 51, 0.8); }
-        }
+        } 
 
         .search-wrapper {
             position: relative;
             width: 100%;
-        }
+        } 
 
         .search-input-field {
             width: 100%;
@@ -181,11 +219,11 @@
             outline: none;
             background: var(--pure-black);
             color: var(--white);
-        }
+        } 
 
         .search-input-field:focus {
             border-color: var(--volt-green);
-        }
+        } 
 
         .search-submit-icon {
             position: absolute;
@@ -195,7 +233,7 @@
             font-size: 1.2rem;
             cursor: pointer;
             color: var(--volt-green);
-        }
+        } 
 
         .tags-nav-bar {
             display: flex;
@@ -204,11 +242,11 @@
             overflow-x: auto;
             white-space: nowrap;
             padding-bottom: 2px;
-        }
+        } 
 
         .tags-nav-bar::-webkit-scrollbar {
             display: none;
-        }
+        } 
 
         .tag-pill {
             background-color: #222222;
@@ -219,39 +257,39 @@
             font-size: 0.85rem;
             font-weight: bold;
             cursor: pointer;
-        }
+        } 
 
         .tag-pill.active {
             background-color: var(--volt-green);
             color: var(--pure-black);
             border-color: var(--volt-green);
-        }
+        } 
 
         /* ==================== 📸 COHESIVE 16:9 BANNER AUTO SLIDER ==================== */
         .slider-section-box {
             padding: 0 8px;
             width: 100%;
-        }
+        } 
 
         .slider-outer {
             border: 1.5px solid var(--volt-green);
             border-radius: 8px;
             overflow: hidden;
             background-color: var(--dark-gray);
-        }
+        } 
 
         .slider-frame {
             width: 100%;
-            aspect-ratio: 16/9; /* ပြင်ဆင်ပြီးသား 16:9 Ratio */
+            aspect-ratio: 16/9;
             position: relative;
             overflow: hidden;
-        }
+        } 
 
         .slider-inner-track {
             position: relative;
             width: 100%;
             height: 100%;
-        }
+        } 
 
         .slide-frame-item {
             position: absolute;
@@ -261,29 +299,29 @@
             height: 100%;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.8s ease-in-out; /* ညင်သာစွာ ပြောင်းလဲပေးမည့် Effect */
+            transition: opacity 0.8s ease-in-out;
             z-index: 1;
-        }
+        } 
 
         .slide-frame-item.active {
             opacity: 1;
             visibility: visible;
             z-index: 2;
-        }
+        } 
 
         .slide-frame-item a {
             display: block;
             width: 100%;
             height: 100%;
             text-decoration: none;
-        }
+        } 
 
         .slide-frame-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
-        }
+        } 
 
         .slide-caption {
             position: absolute;
@@ -293,26 +331,26 @@
             background: linear-gradient(transparent, rgba(0,0,0,0.9));
             padding: 12px 10px;
             z-index: 3;
-        }
+        } 
 
         .slide-caption p {
             color: var(--volt-green);
             font-size: 0.85rem;
             font-weight: bold;
-        }
+        } 
 
         /* ==================== VIDEO GRID CONTENT ==================== */
         .video-container-grid {
             padding: 0 8px;
             width: 100%;
-        }
+        } 
 
         .clean-video-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 8px;
             width: 100%;
-        }
+        } 
 
         .clean-video-card {
             background-color: var(--dark-gray);
@@ -322,25 +360,26 @@
             display: flex;
             flex-direction: column;
             border-bottom: 2px solid transparent;
-        }
+            position: relative;
+        } 
 
         .clean-video-card:active {
             border-bottom-color: var(--volt-green);
-        }
+        } 
 
         .thumb-wrapper {
             position: relative;
             width: 100%;
             aspect-ratio: 16/10;
             background-color: #050505;
-        }
+        } 
 
         .thumb-wrapper img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
-        }
+        } 
 
         .video-duration-badge {
             position: absolute;
@@ -352,6 +391,33 @@
             font-weight: bold;
             padding: 2px 4px;
             border-radius: 2px;
+        } 
+
+        /* ❤️ FAVORITE HEART BUTTON SYSTEM */
+        .favorite-btn-action {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            width: 28px;
+            height: 28px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 15;
+            color: #ccc;
+            font-size: 0.9rem;
+            transition: transform 0.1s ease, color 0.2s;
+        }
+
+        .favorite-btn-action.is-fav {
+            color: #ff3366;
+            text-shadow: 0 0 5px rgba(255, 51, 102, 0.6);
+        }
+
+        .favorite-btn-action:active {
+            transform: scale(1.2);
         }
 
         .meta-description-area {
@@ -359,7 +425,7 @@
             display: flex;
             flex-direction: column;
             gap: 4px;
-        }
+        } 
 
         .meta-title {
             font-size: 0.78rem;
@@ -371,7 +437,7 @@
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
-        }
+        } 
 
         .meta-stats {
             display: flex;
@@ -379,12 +445,12 @@
             align-items: center;
             font-size: 0.65rem;
             color: #888888;
-        }
+        } 
 
         .stat-views {
             color: var(--volt-green);
             font-weight: bold;
-        }
+        } 
 
         /* ==================== PLAYER VIEWPORT SYSTEM (ANTI LEAK) ==================== */
         .player-inner-section {
@@ -393,11 +459,11 @@
             flex-direction: column;
             gap: 12px;
             width: 100%;
-        }
+        } 
 
         .back-navigation-btn {
             background-color: var(--dark-gray);
-            border: 1px solid #333;
+            border: 1px solid #33;
             color: var(--white);
             border-radius: 4px;
             padding: 10px 14px;
@@ -408,12 +474,12 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
-        }
+        } 
 
         .back-navigation-btn:active {
             border-color: var(--volt-green);
             color: var(--volt-green);
-        }
+        } 
 
         .player-viewport-wrapper {
             position: relative;
@@ -423,31 +489,31 @@
             border: 1px solid #222;
             border-radius: 6px;
             overflow: hidden;
-        }
+        } 
 
         .iframe-video-wrapper {
             width: 100%;
             height: 100%;
-        }
+        } 
 
         .iframe-video-wrapper iframe {
             width: 100%;
             height: 100%;
             border: none;
             display: block;
-        }
+        } 
 
-        /* 🛡️ Anti-Click Shield Layer - မူရင်း API Site စာသားလင့်ခ်များအား ကာကွယ်ရန်အလွှာ */
+        /* 🛡️ Anti-Click Shield Layer */
         .player-anti-click-shield {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 45px; /* ဗီဒီယိုအပေါ်ပိုင်း Header ဧရိယာအားလုံးကို ဖုံးအုပ်ထားမည် */
+            height: 45px;
             background: transparent;
             z-index: 10;
             cursor: default;
-        }
+        } 
 
         .active-video-details-title {
             font-size: 0.95rem;
@@ -456,7 +522,7 @@
             color: var(--white);
             border-left: 3px solid var(--volt-green);
             padding-left: 8px;
-        }
+        } 
 
         /* ==================== VIP BANNER CARD ==================== */
         .clean-vip-banner {
@@ -468,14 +534,14 @@
             display: flex;
             flex-direction: column;
             gap: 12px;
-        }
+        } 
 
         .vip-banner-desc {
             color: var(--white);
             font-size: 0.85rem;
             line-height: 1.5;
             font-weight: 500;
-        }
+        } 
 
         .vip-direct-action-btn {
             background-color: var(--volt-green);
@@ -488,11 +554,11 @@
             text-decoration: none;
             display: block;
             cursor: pointer;
-        }
+        } 
 
         .vip-direct-action-btn:active {
             opacity: 0.9;
-        }
+        } 
 
         .section-header-title {
             font-family: var(--font-logo);
@@ -502,7 +568,7 @@
             padding-bottom: 6px;
             margin-top: 8px;
             text-transform: uppercase;
-        }
+        } 
 
         .system-msg {
             grid-column: span 2;
@@ -514,7 +580,7 @@
         }
     </style>
 </head>
-<body>
+<body> 
 
 <div class="popup-overlay" id="noticePopup">
     <div class="popup-box">
@@ -524,9 +590,18 @@
         </div>
         <button class="popup-btn" onclick="closeNoticePopup()">ENTER SITE</button>
     </div>
+</div> 
+
+<div class="popup-overlay" id="adPopup" style="display: none;">
+    <div class="ad-popup-box">
+        <div class="ad-frame-wrapper">
+            <iframe id="adSmartlinkFrame" src=""></iframe>
+        </div>
+        <div class="ad-timer-bar" id="adTimerText">Loading Favorites in 10s...</div>
+    </div>
 </div>
 
-<div class="phone-screen">
+<div class="phone-screen"> 
 
     <div id="dashboardPage" class="page active">
         
@@ -534,19 +609,20 @@
             <div class="site-logo-area">
                 <span class="logo-text-white">BURMA</span>
                 <span class="logo-text-green">HUBB</span>
-            </div>
+            </div> 
 
             <div class="search-wrapper">
                 <input type="text" id="searchField" class="search-input-field" placeholder="Search videos...">
                 <div class="search-submit-icon" onclick="executeSearch()">🔍</div>
-            </div>
+            </div> 
 
             <div class="tags-nav-bar">
                 <button class="tag-pill active" onclick="changeCategory('all', this)">All Videos</button>
                 <button class="tag-pill" onclick="changeCategory('asian', this)">Asian</button>
                 <button class="tag-pill" onclick="changeCategory('myanmar', this)">Myanmar</button>
+                <button class="tag-pill" onclick="handleFavCategoryClick(this)" style="color: #ff3366;">❤️ အကြိုက်ဆုံးများ</button>
             </div>
-        </div>
+        </div> 
 
         <div class="slider-section-box">
             <div class="slider-outer">
@@ -554,10 +630,10 @@
                     <div class="slider-inner-track" id="sliderTrack">
                         
                         <div class="slide-frame-item active">
-                            <a herf="https://t.me/slot_myanmar101" target="_blank">
+                            <a href="https://t.me/slot_myanmar101" target="_blank">
                                 <img src="https://i.ibb.co/Wpf016Xb/New-Project-116-370-BD56.png" alt="Slide 1">
                                 <div class="slide-caption">
-                                    <p>ကျွဲဆော့ပြီး ငွေတွေ ပွားလိုက်ပါ!</p>
+                                    <p>ကျွဲဆော့ပြီး ငွေတွေ ပွားလိုက်ကြစို့!</p>
                                 </div>
                             </a>
                         </div>
@@ -578,16 +654,15 @@
                                     <p>အဖွဲ့ဝင်ပြီး Premium အထူးဗီဒီယိုများ ကြည့်ရှုပါ</p>
                                 </div>
                             </a>
-                        </div>
+                        </div> 
 
                     </div>
                 </div>
             </div>
-        </div>
+        </div> 
 
         <div class="video-container-grid">
-            <div class="clean-video-grid" id="mainVideoGrid">
-                </div>
+            <div class="clean-video-grid" id="mainVideoGrid"></div>
         </div>
     </div>
 
@@ -596,35 +671,32 @@
         <div class="player-inner-section">
             <button class="back-navigation-btn" onclick="returnToDashboard()">
                 ◀ Back to Home
-            </button>
+            </button> 
 
             <div class="player-viewport-wrapper">
                 <div class="player-anti-click-shield"></div>
-                
-                <div class="iframe-video-wrapper" id="iframeWrapper">
-                    </div>
-            </div>
+                <div class="iframe-video-wrapper" id="iframeWrapper"></div>
+            </div> 
 
             <div class="active-video-details-title" id="activeVideoTitle">
                 Loading video title details...
-            </div>
+            </div> 
 
             <div class="clean-vip-banner">
                 <div class="vip-banner-desc">
-                    လူကြီးကားတွေ ကြည့်ရတာရိုးလာရင် 
-ကလေးကား၊ VIP 20000ks နဲ့လာဝင်လို့ရ၊ အရေတွက် 4000 ကျော်ပါ၊ Save လို့ရ။ 5000 တန်Vip နှစ်ခုလက်ဆောင်ပေးပါတယ်ခင်ဗျာ။!
+                    လူကြီးကားတွေ ကြည့်ရတာရိုးလာရင် ကလေးကား၊ VIP 20000ks နဲ့လာဝင်လို့ရ၊ အရေတွက် 4000 ကျော်ပါ၊ Save လို့ရ။ 5000 တန်Vip နှစ်ခုလက်ဆောင်ပေးပါတယ်ခင်ဗျာ။!
                 </div>
                 <a href="https://t.me/Dr_Bogyi?text=Vipဝင်ချင်လို့ပါဗျ ငွေလွှဲရမဲ့ နံပါတ်လေးပို့ထားပေးပါ" target="_blank" class="vip-direct-action-btn">
                     VIP ဝယ်မည်
                 </a>
-            </div>
+            </div> 
 
             <div class="section-header-title">Related Videos</div>
             <div class="clean-video-grid" id="relatedVideoGrid"></div>
         </div>
-    </div>
+    </div> 
 
-</div>
+</div> 
 
 <script>
     let searchKeyword = "asian"; 
@@ -633,8 +705,12 @@
     let isFetchingMore = false;
     let currentActiveView = "dashboard"; 
 
+    // Initialize Sessions Storage
     if (!sessionStorage.getItem('seenVideoIds')) {
         sessionStorage.setItem('seenVideoIds', JSON.stringify([]));
+    }
+    if (!localStorage.getItem('userFavoriteVideos')) {
+        localStorage.setItem('userFavoriteVideos', JSON.stringify([]));
     }
 
     document.addEventListener("DOMContentLoaded", () => {
@@ -646,12 +722,15 @@
                 executeSearch();
                 this.blur(); 
             }
-        });
+        }); 
 
         window.addEventListener('scroll', () => {
+            // Infinite scroll disabled when viewing local favorites list
+            if (searchKeyword === "___favorites___") return;
+
             if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 500) {
                 if (!isFetchingMore) {
-                    isFetchingMore = true;
+                    isFetchingMore = true; 
 
                     if (currentActiveView === "dashboard") {
                         dashboardPageNum++;
@@ -663,29 +742,117 @@
                 }
             }
         });
-    });
+    }); 
 
-    // 📸 Cohesive Auto Slider Engine (Fade transition logic)
     function initPhotoAutoSlider() {
         const slides = document.querySelectorAll('.slide-frame-item');
         let currentSlideIndex = 0;
         const totalSlides = slides.length;
         
-        if (totalSlides === 0) return;
+        if (totalSlides === 0) return; 
 
         setInterval(() => {
             slides[currentSlideIndex].classList.remove('active');
             currentSlideIndex = (currentSlideIndex + 1) % totalSlides;
             slides[currentSlideIndex].classList.add('active');
         }, 3500); 
-    }
+    } 
 
     function closeNoticePopup() {
         document.getElementById('noticePopup').style.display = 'none';
+    } 
+
+    // Handle Smartlink Display & Trigger Fav Filter
+    function handleFavCategoryClick(element) {
+        document.querySelectorAll('.tag-pill').forEach(btn => btn.classList.remove('active'));
+        element.classList.add('active');
+
+        const adPopup = document.getElementById('adPopup');
+        const adFrame = document.getElementById('adSmartlinkFrame');
+        const timerText = document.getElementById('adTimerText');
+        
+        // Smartlink URL
+        adFrame.src = "https://www.effectivecpmnetwork.com/y8j5fhj7?key=f358a7cf2521836b21c157f8969ed338";
+        adPopup.style.display = 'flex';
+        
+        let timeLeft = 10;
+        timerText.innerText = `Please wait ${timeLeft}s to view Favorites...`;
+
+        const countdown = setInterval(() => {
+            timeLeft--;
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                adPopup.style.display = 'none';
+                adFrame.src = ""; // Flush frame resource
+                displayFavoriteVideos();
+            } else {
+                timerText.innerText = `Please wait ${timeLeft}s to view Favorites...`;
+            }
+        }, 1000);
+    }
+
+    // Toggle Favorites List data
+    function toggleFavorite(e, videoData) {
+        e.stopPropagation(); // Avoid triggering video playback route click
+        let favorites = JSON.parse(localStorage.getItem('userFavoriteVideos'));
+        const index = favorites.findIndex(item => item.id === videoData.id);
+
+        if (index > -1) {
+            favorites.splice(index, 1);
+            e.currentTarget.classList.remove('is-fav');
+            e.currentTarget.innerHTML = '♡';
+        } else {
+            favorites.push(videoData);
+            e.currentTarget.classList.add('is-fav');
+            e.currentTarget.innerHTML = '❤️';
+        }
+        localStorage.setItem('userFavoriteVideos', JSON.stringify(favorites));
+
+        if (searchKeyword === "___favorites___") {
+            displayFavoriteVideos();
+        }
+    }
+
+    // Render Favorites Data directly from Storage
+    function displayFavoriteVideos() {
+        searchKeyword = "___favorites___";
+        const targetGrid = document.getElementById('mainVideoGrid');
+        targetGrid.innerHTML = "";
+        
+        let favorites = JSON.parse(localStorage.getItem('userFavoriteVideos'));
+
+        if (favorites.length === 0) {
+            targetGrid.innerHTML = `<div class="system-msg">အကြိုက်ဆုံးအဖြစ် သိမ်းဆည်းထားသော ဗီဒီယိုများ မရှိသေးပါ။</div>`;
+            return;
+        }
+
+        favorites.forEach(video => {
+            const card = document.createElement('div');
+            card.className = 'clean-video-card';
+            card.onclick = () => openVideoPlayer(video.embed, video.title); 
+
+            card.innerHTML = `
+                <div class="thumb-wrapper">
+                    <img src="${video.thumb}" alt="Thumb">
+                    <div class="video-duration-badge">${video.duration}</div>
+                    <div class="favorite-btn-action is-fav" onclick="toggleFavorite(event, ${JSON.stringify(video).replace(/"/g, '&quot;')})">❤️</div>
+                </div>
+                <div class="meta-description-area">
+                    <div class="meta-title">${video.title}</div>
+                    <div class="meta-stats">
+                        <span class="stat-views">${video.views} views</span>
+                        <span>Recent</span>
+                    </div>
+                </div>
+            `;
+            targetGrid.appendChild(card);
+        });
     }
 
     // Unified Fetch Implementation
     async function loadPortalVideos(query, pageNum, containerId, appendMode = false) {
+        if (query === "___favorites___") return;
+
         const targetGrid = document.getElementById(containerId);
         
         if (!appendMode) {
@@ -696,41 +863,58 @@
             scrollLoader.id = 'infiniteScrollLoader';
             scrollLoader.innerText = 'Loading more videos...';
             targetGrid.appendChild(scrollLoader);
-        }
+        } 
 
         try {
             const endpoint = `https://www.eporner.com/api/v2/video/search/?query=${encodeURIComponent(query)}&per_page=20&page=${pageNum}&thumbsize=big`;
             const res = await fetch(endpoint);
-            const resultData = await res.json();
+            const resultData = await res.json(); 
 
             if (!appendMode) {
                 targetGrid.innerHTML = ""; 
             } else {
                 const existingLoader = document.getElementById('infiniteScrollLoader');
                 if (existingLoader) existingLoader.remove();
-            }
+            } 
 
-            let seenVideoIds = JSON.parse(sessionStorage.getItem('seenVideoIds'));
+            let seenVideoIds = JSON.parse(sessionStorage.getItem('seenVideoIds')); 
+            let favorites = JSON.parse(localStorage.getItem('userFavoriteVideos'));
 
             if (resultData.videos && resultData.videos.length > 0) {
-                let uniqueCardsAddedCount = 0;
+                let uniqueCardsAddedCount = 0; 
 
                 resultData.videos.forEach(video => {
                     if (!seenVideoIds.includes(video.id)) {
                         seenVideoIds.push(video.id); 
-                        uniqueCardsAddedCount++;
+                        uniqueCardsAddedCount++; 
 
                         const rawViews = video.views || Math.floor(Math.random() * 450) + 25;
-                        const formattedViews = rawViews >= 1000 ? (rawViews / 1000).toFixed(1) + 'K' : rawViews;
+                        const formattedViews = rawViews >= 1000 ? (rawViews / 1000).toFixed(1) + 'K' : rawViews; 
+                        const durationStr = `${video.length_min}:${video.length_sec < 10 ? '0' + video.length_sec : video.length_sec}`;
+
+                        const isAlreadyFav = favorites.some(item => item.id === video.id);
+
+                        // Minimize structure payload stored in local storage
+                        const minimalVideoData = {
+                            id: video.id,
+                            title: video.title.replace(/'/g, "\\'").replace(/"/g, '\\"'),
+                            embed: video.embed,
+                            thumb: video.default_thumb.src,
+                            duration: durationStr,
+                            views: formattedViews
+                        };
 
                         const card = document.createElement('div');
                         card.className = 'clean-video-card';
-                        card.onclick = () => openVideoPlayer(video.embed, video.title);
+                        card.onclick = () => openVideoPlayer(video.embed, video.title); 
 
                         card.innerHTML = `
                             <div class="thumb-wrapper">
                                 <img src="${video.default_thumb.src}" alt="Thumb">
-                                <div class="video-duration-badge">${video.length_min}:${video.length_sec < 10 ? '0' + video.length_sec : video.length_sec}</div>
+                                <div class="video-duration-badge">${durationStr}</div>
+                                <div class="favorite-btn-action ${isAlreadyFav ? 'is-fav' : ''}" onclick="toggleFavorite(event, ${JSON.stringify(minimalVideoData).replace(/"/g, '&quot;')})">
+                                    ${isAlreadyFav ? '❤️' : '♡'}
+                                </div>
                             </div>
                             <div class="meta-description-area">
                                 <div class="meta-title">${video.title}</div>
@@ -742,9 +926,9 @@
                         `;
                         targetGrid.appendChild(card);
                     }
-                });
+                }); 
 
-                sessionStorage.setItem('seenVideoIds', JSON.stringify(seenVideoIds));
+                sessionStorage.setItem('seenVideoIds', JSON.stringify(seenVideoIds)); 
 
                 if (uniqueCardsAddedCount === 0) {
                     isFetchingMore = false;
@@ -773,14 +957,14 @@
             }
             isFetchingMore = false;
         }
-    }
+    } 
 
     function executeSearch() {
         const value = document.getElementById('searchField').value.trim();
         searchKeyword = value ? value : "asian"; 
         dashboardPageNum = Math.floor(Math.random() * 5) + 1;
         loadPortalVideos(searchKeyword, dashboardPageNum, 'mainVideoGrid', false);
-    }
+    } 
 
     function changeCategory(type, element) {
         document.querySelectorAll('.tag-pill').forEach(btn => btn.classList.remove('active'));
@@ -788,22 +972,22 @@
         searchKeyword = (type === 'all') ? 'asian' : type;
         dashboardPageNum = Math.floor(Math.random() * 5) + 1;
         loadPortalVideos(searchKeyword, dashboardPageNum, 'mainVideoGrid', false);
-    }
+    } 
 
     function openVideoPlayer(embedUrl, title) {
         currentActiveView = "player";
         document.getElementById('dashboardPage').classList.remove('active');
-        document.getElementById('playerPage').classList.add('active');
+        document.getElementById('playerPage').classList.add('active'); 
 
         document.getElementById('iframeWrapper').innerHTML = `
             <iframe src="${embedUrl}" allowfullscreen scrolling="no"></iframe>
         `;
-        document.getElementById('activeVideoTitle').innerText = title;
+        document.getElementById('activeVideoTitle').innerText = title; 
 
         playerRelatedPageNum = Math.floor(Math.random() * 5) + 6;
         loadPortalVideos(searchKeyword, playerRelatedPageNum, 'relatedVideoGrid', false);
         window.scrollTo(0, 0);
-    }
+    } 
 
     function returnToDashboard() {
         currentActiveView = "dashboard";
@@ -812,10 +996,16 @@
         document.getElementById('iframeWrapper').innerHTML = ""; 
         document.getElementById('relatedVideoGrid').innerHTML = ""; 
 
-        dashboardPageNum = dashboardPageNum + Math.floor(Math.random() * 3) + 1;
-        loadPortalVideos(searchKeyword, dashboardPageNum, 'mainVideoGrid', false);
+        if (searchKeyword === "___favorites___") {
+            displayFavoriteVideos();
+        } else {
+            dashboardPageNum = dashboardPageNum + Math.floor(Math.random() * 3) + 1;
+            loadPortalVideos(searchKeyword, dashboardPageNum, 'mainVideoGrid', false);
+        }
     }
-</script>
+</script> 
+
+<script src="https://pl30365128.effectivecpmnetwork.com/8f/ca/73/8fca7385f9007d1f3a68c2f30a6b69fc.js"></script>
 
 </body>
 </html>
