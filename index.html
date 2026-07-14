@@ -645,14 +645,14 @@
             slides[currentSlideIndex].classList.remove('active');
             currentSlideIndex = (currentSlideIndex + 1) % totalSlides;
             slides[currentSlideIndex].classList.add('active');
-        }, 4000); // ၄ စက္ကန့်လျှင် တစ်ပုံစီ အလှည့်ကျ Slide သွားပါမည်
+        }, 4000); 
     }
 
     function closeNoticePopup() {
         document.getElementById('noticePopup').style.display = 'none';
     }
 
-    // API Videos Request Engine
+    // API Videos Request Engine with CORS Proxy integration
     async function loadPortalVideos(query, pageNum, containerId, appendMode = false) {
         const targetGrid = document.getElementById(containerId);
         
@@ -667,7 +667,12 @@
         }
 
         try {
-            const endpoint = `https://www.eporner.com/api/v2/video/search/?query=${encodeURIComponent(query)}&per_page=20&page=${pageNum}&thumbsize=big`;
+            // Eporner Real API URL
+            const realApiUrl = `https://www.eporner.com/api/v2/video/search/?query=${encodeURIComponent(query)}&per_page=20&page=${pageNum}&thumbsize=big`;
+            
+            // Bypass browser CORS block using corsproxy.io proxy
+            const endpoint = `https://corsproxy.io/?` + encodeURIComponent(realApiUrl);
+            
             const res = await fetch(endpoint);
             const resultData = await res.json();
 
@@ -715,7 +720,7 @@
             }
         } catch (err) {
             console.error(err);
-            if (!appendMode) targetGrid.innerHTML = `<div class="system-msg">Network error. Connection active but failed.</div>`;
+            if (!appendMode) targetGrid.innerHTML = `<div class="system-msg">ဗီဒီယိုများ ရယူရာတွင် အဆင်မပြေဖြစ်နေပါသည်။ ခဏနေမှ ထပ်စမ်းကြည့်ပေးပါဗျာ။</div>`;
             isFetchingMore = false;
         }
     }
