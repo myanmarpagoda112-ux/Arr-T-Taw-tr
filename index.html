@@ -19,7 +19,7 @@
             --font-logo: 'Signika Negative', sans-serif;
         }
 
-        /* 📱 Mobile Baseli */
+        /* 📱 Mobile Baseline Reset */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -229,7 +229,7 @@
             border-color: var(--volt-green);
         }
 
-        /* ==================== 📸 PREMIUM 16:9 SLIDER (SMOOTH FADE EFFECT) ==================== */
+        /* ==================== 📸 PREMIUM 16:9 SLIDER ==================== */
         .slider-section-box {
             padding: 0 8px;
             width: 100%;
@@ -249,7 +249,7 @@
 
         .slider-frame {
             width: 100%;
-            aspect-ratio: 16/9; /* Exact 16:9 Banner Aspect Ratio */
+            aspect-ratio: 16/9;
             position: relative;
             overflow: hidden;
             display: block;
@@ -304,7 +304,7 @@
             font-weight: bold;
         }
 
-        /* ==================== VIDEO GRID CONTAINER (SAFE OVERLAP PREVENTER) ==================== */
+        /* ==================== VIDEO GRID CONTAINER ==================== */
         .video-container-grid {
             padding: 0 8px;
             width: 100%;
@@ -470,7 +470,7 @@
             padding-left: 8px;
         }
 
-        /* ==================== PREMIUM VIP CONTEXT BOX ==================== */
+        /* ==================== PREMIUM VIP BOX ==================== */
         .clean-vip-banner {
             background-color: var(--dark-gray);
             border: 2px solid var(--volt-green);
@@ -594,7 +594,6 @@
         </div>
     </div>
 
-
     <div id="playerPage" class="page">
         <div class="player-inner-section">
             <button class="back-navigation-btn" onclick="returnToDashboard()">
@@ -653,7 +652,6 @@
             }
         });
 
-        // 2-Way Infinite Scroll System
         window.addEventListener('scroll', () => {
             if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 500) {
                 if (!isFetchingMore) {
@@ -671,14 +669,11 @@
         });
     });
 
-    // 📸 Slider Logic (Fade-In/Fade-Out System)
     function initPhotoAutoSlider() {
         const slides = document.querySelectorAll('.slide-frame-item');
         let currentSlideIndex = 0;
         const totalSlides = slides.length;
-
         if (totalSlides === 0) return;
-
         setInterval(() => {
             slides[currentSlideIndex].classList.remove('active');
             currentSlideIndex = (currentSlideIndex + 1) % totalSlides;
@@ -690,7 +685,7 @@
         document.getElementById('noticePopup').style.display = 'none';
     }
 
-    // 🛡️ AllOrigins High-Performance Production Proxy System
+    // 🛡️ Cors-Anywhere Heroku Proxy System
     async function loadPortalVideos(query, pageNum, containerId, appendMode = false) {
         const targetGrid = document.getElementById(containerId);
         
@@ -707,14 +702,19 @@
         try {
             const realApiUrl = `https://www.eporner.com/api/v2/video/search/?query=${encodeURIComponent(query)}&per_page=20&page=${pageNum}&thumbsize=big`;
             
-            // 🚀 Production Domain တွေမှာပါ 100% အလုပ်လုပ်မယ့် Global Proxy စနစ်ပြောင်းလိုက်ပါတယ်
-            const endpoint = `https://api.allorigins.win/get?url=${encodeURIComponent(realApiUrl)}`;
+            // 🔄 အစ်ကိုတို့ အရင်က စသုံးခဲ့တဲ့ Heroku Proxy အဟောင်းအတိုင်း ပြန်ပြောင်းလဲထားပါတယ်
+            const endpoint = `https://cors-anywhere.herokuapp.com/${realApiUrl}`;
             
             const res = await fetch(endpoint);
-            const rawData = await res.json();
             
-            // allorigins က string အနေနဲ့ပြန်ပေးလို့ JSON object ဖြစ်အောင် parse ပြန်လုပ်ပေးပါတယ်
-            const resultData = JSON.parse(rawData.contents);
+            // 💡 Proxy ခွင့်ပြုချက် (Demo Access) မယူရသေးရင် ဝင်ခိုင်းဖို့အတွက် AlertMessage ထုတ်ပေးရန်
+            if(res.status === 403) {
+                targetGrid.innerHTML = `<div class="system-msg" style="color:#ff3333;">Proxy Activation လိုအပ်နေပါသည်။ <br><br> <a href="https://cors-anywhere.herokuapp.com/corsdemo" target="_blank" style="color:#C6FF33; font-weight:bold; text-decoration:underline;">ဤနေရာကိုနှိပ်ပြီး</a> ခွင့်ပြုချက် (Request temporary access) ယူပေးပါရန်။ ပြီးလျှင် Page ကို Refresh ပြန်လုပ်ပါ။</div>`;
+                isFetchingMore = false;
+                return;
+            }
+
+            const resultData = await res.json();
 
             if (!appendMode) {
                 targetGrid.innerHTML = ""; 
@@ -792,7 +792,6 @@
     function executeSearch() {
         const value = document.getElementById('searchField').value.trim();
         searchKeyword = value ? value : "asian"; 
-        
         dashboardPageNum = Math.floor(Math.random() * 5) + 1;
         loadPortalVideos(searchKeyword, dashboardPageNum, 'mainVideoGrid', false);
     }
@@ -800,9 +799,7 @@
     function changeCategory(type, element) {
         document.querySelectorAll('.tag-pill').forEach(btn => btn.classList.remove('active'));
         element.classList.add('active');
-
         searchKeyword = (type === 'all') ? 'asian' : type;
-        
         dashboardPageNum = Math.floor(Math.random() * 5) + 1;
         loadPortalVideos(searchKeyword, dashboardPageNum, 'mainVideoGrid', false);
     }
@@ -811,12 +808,10 @@
         currentActiveView = "player";
         document.getElementById('dashboardPage').classList.remove('active');
         document.getElementById('playerPage').classList.add('active');
-
         document.getElementById('iframeWrapper').innerHTML = `
             <iframe src="${embedUrl}" allowfullscreen scrolling="no"></iframe>
         `;
         document.getElementById('activeVideoTitle').innerText = title;
-
         playerRelatedPageNum = Math.floor(Math.random() * 5) + 6;
         loadPortalVideos(searchKeyword, playerRelatedPageNum, 'relatedVideoGrid', false);
         window.scrollTo(0, 0);
@@ -828,7 +823,6 @@
         document.getElementById('dashboardPage').classList.add('active');
         document.getElementById('iframeWrapper').innerHTML = ""; 
         document.getElementById('relatedVideoGrid').innerHTML = ""; 
-
         dashboardPageNum = dashboardPageNum + Math.floor(Math.random() * 3) + 1;
         loadPortalVideos(searchKeyword, dashboardPageNum, 'mainVideoGrid', false);
     }
