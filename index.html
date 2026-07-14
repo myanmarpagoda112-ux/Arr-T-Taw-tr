@@ -470,7 +470,7 @@
             padding-left: 8px;
         }
 
-        /* ==================== PREMIUM VIP BOX ==================== */
+        /* ==================== PREMIUM VIP CONTEXT BOX ==================== */
         .clean-vip-banner {
             background-color: var(--dark-gray);
             border: 2px solid var(--volt-green);
@@ -594,6 +594,7 @@
         </div>
     </div>
 
+
     <div id="playerPage" class="page">
         <div class="player-inner-section">
             <button class="back-navigation-btn" onclick="returnToDashboard()">
@@ -613,7 +614,7 @@
                 <div class="vip-banner-desc">
                     မြန်မာ အလန်းဇယား // Local Leak // မော်ဒယ်ကားများ // Solo Vd // အထန်မလေးဟာများ // ပရမီယံ Videos တွေကို Vipကြေး ၂၀၀၀၀ကျပ်ဖြင့် လာရောက်ဝင်နိုင်ပါပြီ!
                 </div>
-                <a href="https://t.me/your_bot_username?text=Vipဝင်ချင်လို့ပါဗျ%20ငွေလွှဲရမဲ့%20နံပါတ်လေးပို့ထားပေးပါ" target="_blank" class="vip-direct-action-btn">
+                <a href="https://t.me/Dr_chatgyi69?text=Vipဝင်ချင်လို့ပါဗျ%20ငွေလွှဲရမဲ့%20နံပါတ်လေးပို့ထားပေးပါ" target="_blank" class="vip-direct-action-btn">
                     VIP JOIN NOW
                 </a>
             </div>
@@ -629,11 +630,9 @@
 <script src="https://pl30247191.effectivecpmnetwork.com/8e/e7/36/8ee736ffc13b594f8960d0a967959a01.js"></script>
 
 <script>
-    let searchKeyword = "asian"; 
-    
+    let searchKeyword = "myanmar"; 
     let dashboardPageNum = Math.floor(Math.random() * 5) + 1; 
     let playerRelatedPageNum = Math.floor(Math.random() * 5) + 6;
-    
     let isFetchingMore = false;
     let currentActiveView = "dashboard"; 
 
@@ -656,7 +655,6 @@
             if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 500) {
                 if (!isFetchingMore) {
                     isFetchingMore = true;
-
                     if (currentActiveView === "dashboard") {
                         dashboardPageNum++;
                         loadPortalVideos(searchKeyword, dashboardPageNum, 'mainVideoGrid', true);
@@ -685,7 +683,7 @@
         document.getElementById('noticePopup').style.display = 'none';
     }
 
-    // 🛡️ Cors-Anywhere Heroku Proxy System
+    // 🛡️ AllOrigins High-Performance Global Proxy System
     async function loadPortalVideos(query, pageNum, containerId, appendMode = false) {
         const targetGrid = document.getElementById(containerId);
         
@@ -700,21 +698,17 @@
         }
 
         try {
-            const realApiUrl = `https://www.eporner.com/api/v2/video/search/?query=${encodeURIComponent(query)}&per_page=20&page=${pageNum}&thumbsize=big`;
+            // အစ်ကို့ အဟောင်းထဲက သုံးထားတဲ့ တိုက်ရိုက် API URL logic ပါပဲဗျာ
+            const realApiUrl = `https://www.eporner.com/api/v2/video/search/?query=${encodeURIComponent(query)}&per_page=12&page=${pageNum}&thumbsize=big`;
             
-            // 🔄 အစ်ကိုတို့ အရင်က စသုံးခဲ့တဲ့ Heroku Proxy အဟောင်းအတိုင်း ပြန်ပြောင်းလဲထားပါတယ်
-            const endpoint = `https://cors-anywhere.herokuapp.com/${realApiUrl}`;
+            // လူတိုင်းရဲ့ Browser မှာ 100% အလုပ်လုပ်အောင် အများသုံး အငြိမ်ဆုံး Proxy ကနေ ကြားခံလှမ်းဖတ်ပေးပါတယ်
+            const endpoint = `https://api.allorigins.win/get?url=${encodeURIComponent(realApiUrl)}`;
             
             const res = await fetch(endpoint);
+            const rawData = await res.json();
             
-            // 💡 Proxy ခွင့်ပြုချက် (Demo Access) မယူရသေးရင် ဝင်ခိုင်းဖို့အတွက် AlertMessage ထုတ်ပေးရန်
-            if(res.status === 403) {
-                targetGrid.innerHTML = `<div class="system-msg" style="color:#ff3333;">Proxy Activation လိုအပ်နေပါသည်။ <br><br> <a href="https://cors-anywhere.herokuapp.com/corsdemo" target="_blank" style="color:#C6FF33; font-weight:bold; text-decoration:underline;">ဤနေရာကိုနှိပ်ပြီး</a> ခွင့်ပြုချက် (Request temporary access) ယူပေးပါရန်။ ပြီးလျှင် Page ကို Refresh ပြန်လုပ်ပါ။</div>`;
-                isFetchingMore = false;
-                return;
-            }
-
-            const resultData = await res.json();
+            // Proxy က ပြန်ပေးတဲ့ Data String ကို JSON Object ပြန်ပြောင်းယူခြင်း
+            const resultData = JSON.parse(rawData.contents);
 
             if (!appendMode) {
                 targetGrid.innerHTML = ""; 
@@ -738,12 +732,11 @@
 
                         const card = document.createElement('div');
                         card.className = 'clean-video-card';
-                        
                         card.onclick = () => openVideoPlayer(video.embed, video.title);
 
                         card.innerHTML = `
                             <div class="thumb-wrapper">
-                                <img src="${video.default_thumb.src}" alt="Thumb">
+                                <img src="${video.default_thumb.src}" alt="Thumb" loading="lazy">
                                 <div class="video-duration-badge">${video.length_min}:${video.length_sec < 10 ? '0' + video.length_sec : video.length_sec}</div>
                             </div>
                             <div class="meta-description-area">
@@ -772,7 +765,6 @@
                     }
                     return;
                 }
-                
                 isFetchingMore = false;
             } else {
                 if (!appendMode) {
@@ -791,7 +783,7 @@
 
     function executeSearch() {
         const value = document.getElementById('searchField').value.trim();
-        searchKeyword = value ? value : "asian"; 
+        searchKeyword = value ? value : "myanmar"; 
         dashboardPageNum = Math.floor(Math.random() * 5) + 1;
         loadPortalVideos(searchKeyword, dashboardPageNum, 'mainVideoGrid', false);
     }
@@ -799,7 +791,7 @@
     function changeCategory(type, element) {
         document.querySelectorAll('.tag-pill').forEach(btn => btn.classList.remove('active'));
         element.classList.add('active');
-        searchKeyword = (type === 'all') ? 'asian' : type;
+        searchKeyword = (type === 'all') ? 'myanmar' : type;
         dashboardPageNum = Math.floor(Math.random() * 5) + 1;
         loadPortalVideos(searchKeyword, dashboardPageNum, 'mainVideoGrid', false);
     }
